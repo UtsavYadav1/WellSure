@@ -74,8 +74,8 @@ try:
     with open('label_encoder.pkl', 'rb') as f:
         le = pickle.load(f)
     print("Label encoder loaded.")
-except FileNotFoundError:
-    print("Label encoder not found (optional for rules-based mode).")
+except Exception as e:
+    print(f"Label encoder not loaded (optional for rules-based mode): {e}")
 
 
 # ==========================================
