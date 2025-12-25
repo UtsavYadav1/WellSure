@@ -1,0 +1,313 @@
+disease,workout
+Fungal infection,Light walking
+Fungal infection,Yoga for stress relief
+Fungal infection,Breathing exercises
+Fungal infection,Avoid excessive sweating exercises
+Fungal infection,Stretching
+Acne,Exercise regularly
+Acne,Shower immediately after
+Acne,Wear loose clothing
+Psoriasis,Swimming
+Psoriasis,Walking
+Psoriasis,Yoga
+Psoriasis,Stretching
+Psoriasis,Low impact
+Impetigo,Rest
+Impetigo,Avoid contact sports
+Impetigo,No swimming
+Chicken pox,Rest
+Chicken pox,No exercise
+Allergy,Indoor yoga
+Allergy,Light cardio indoors
+Allergy,Breathing exercises (Pranayama)
+Allergy,Avoid outdoor running during high pollen
+Drug Reaction,Rest mainly
+Drug Reaction,Very light walking if mild
+Drug Reaction,Breathing exercises
+AIDS,Moderate resistance training
+AIDS,Aerobic exercise
+AIDS,Yoga for flexibility
+AIDS,Meditation
+AIDS,Physician-approved routine
+GERD,Walking
+GERD,Light jogging
+GERD,Upright stationary biking
+GERD,Avoid high-impact jumping
+GERD,Avoid crunches/sit-ups
+Chronic cholestasis,Light walking
+Chronic cholestasis,Gentle stretching
+Chronic cholestasis,Restorative yoga
+Chronic cholestasis,Avoid strenuous activities
+Peptic ulcer disease,Walking
+Peptic ulcer disease,Yoga
+Peptic ulcer disease,Tai Chi
+Peptic ulcer disease,Avoid intense core workouts
+Peptic ulcer disease,Stress-reducing exercises
+Gastroenteritis,Complete rest
+Gastroenteritis,No exercise until recovered
+Jaundice,Complete rest
+Jaundice,Very light walking (only during recovery)
+Dimorphic hemmorhoids(piles),Walking
+Dimorphic hemmorhoids(piles),Kegel exercises
+Dimorphic hemmorhoids(piles),Yoga
+Dimorphic hemmorhoids(piles),Avoid heavy lifting
+Dimorphic hemmorhoids(piles),Avoid cycling
+hepatitis A,Rest
+hepatitis A,Light activities only as tolerated
+Hepatitis B,Moderate exercise (walking)
+Hepatitis B,Avoid intense training during flares
+Hepatitis B,Yoga
+Hepatitis B,Listen to body
+Hepatitis C,Regular moderate exercise
+Hepatitis C,Walking
+Hepatitis C,Cycling
+Hepatitis C,Strength training (light)
+Hepatitis C,Rest when tired
+Hepatitis D,Mild activity
+Hepatitis D,Rest prioritised
+Hepatitis E,Complete rest
+Hepatitis E,No exercise during acute phase
+Alcoholic hepatitis,Doctor_supervised_rehabilitation
+Alcoholic hepatitis,Light walking
+Alcoholic hepatitis,Breathing exercises
+Diabetes,Brisk walking
+Diabetes,Cycling
+Diabetes,Swimming
+Diabetes,Strength training
+Diabetes,Aerobic exercises
+Diabetes,Yoga
+Hypothyroidism,Aerobic exercise
+Hypothyroidism,Strength training
+Hypothyroidism,Yoga
+Hypothyroidism,Walking
+Hypothyroidism,Pilates
+Hyperthyroidism,Low-impact exercise
+Hyperthyroidism,Relaxation techniques
+Hyperthyroidism,Yoga
+Hyperthyroidism,Tai Chi
+Hyperthyroidism,Avoid intense cardio slightly
+Hypoglycemia,Light to moderate exercise
+Hypoglycemia,Check sugar before workout
+Hypoglycemia,Carry snack
+Hypoglycemia,Avoid exercise if low
+Bronchial Asthma,Swimming (indoor)
+Bronchial Asthma,Walking
+Bronchial Asthma,Yoga/Breathing exercises
+Bronchial Asthma,Short bursts of activity
+Bronchial Asthma,Medicinal warm-up
+Common Cold,Mild walking
+Common Cold,Rest
+Common Cold,Avoid heavy cardio
+Pneumonia,Respiratory physiotherapy
+Pneumonia,Deep breathing exercises
+Pneumonia,Avoid exertion until cleared
+Tuberculosis,Light walking
+Tuberculosis,Breathing exercises
+Tuberculosis,Avoid strenuous labor
+Hypertension,Aerobic exercise
+Hypertension,Brisk walking
+Hypertension,Jogging
+Hypertension,Cycling
+Hypertension,Swimming
+Hypertension,avoid heavy weight lifting (check with doctor)
+Heart attack,Cardiac_rehabilitation_program
+Heart attack,Walking
+Heart attack,Light jogging (post recovery)
+Heart attack,Resistance training (guided)
+Heart attack,Yoga
+Varicose veins,Walking
+Varicose veins,Cycling
+Varicose veins,Swimming
+Varicose veins,Leg lifts
+Varicose veins,Calf raises
+Varicose veins,Avoid high-impact running
+Migraine,Regular moderate aerobic exercise
+Migraine,Yoga
+Migraine,Tai Chi
+Migraine,Neck stretches
+Migraine,Avoid extreme exertion
+Paralysis (brain hemorrhage),Doctor_supervised_rehabilitation
+Paralysis (brain hemorrhage),Physiotherapy
+Paralysis (brain hemorrhage),Range of motion exercises
+Paralysis (brain hemorrhage),Occupational therapy
+Paralysis (brain hemorrhage),Muscle strengthening
+Paralysis (brain hemorrhage),Balance training
+(vertigo) Paroymsal Positional Vertigo,Balance exercises
+(vertigo) Paroymsal Positional Vertigo,Brandt-Daroff exercises
+(vertigo) Paroymsal Positional Vertigo,Tai Chi
+(vertigo) Paroymsal Positional Vertigo,Walking (with unstable support)
+Malaria,Complete rest
+Malaria,No exercise during infection
+Dengue,Complete rest
+Dengue,No exercise
+Typhoid,Complete rest during fever
+Typhoid,Gradual walking during recovery
+Cervical spondylosis,Neck stretches
+Cervical spondylosis,Neck strengthening exercises
+Cervical spondylosis,Yoga for spine
+Cervical spondylosis,Walking
+Cervical spondylosis,Low-impact aerobics
+Cervical spondylosis,Physiotherapy
+Osteoarthristis,Low-impact aerobics
+Osteoarthristis,Swimming
+Osteoarthristis,Water aerobics
+Osteoarthristis,Strength training
+Osteoarthristis,Range of motion exercises
+Osteoarthristis,Tai Chi
+Arthritis,Range-of-motion exercises
+Arthritis,Strengthening exercises
+Arthritis,Aerobic exercise (low impact)
+Arthritis,Yoga
+Arthritis,Swimming
+Urinary tract infection,Light walking
+Urinary tract infection,Pelvic floor exercises (when healed)
+Urinary tract infection,Rest
+Eczema,Light walking
+Eczema,Yoga
+Eczema,Swimming (rinse after)
+Eczema,Avoid sweaty exercises
+Eczema,Stretching
+Contact Dermatitis,Light walking
+Contact Dermatitis,Yoga
+Contact Dermatitis,Avoid activities causing friction
+Contact Dermatitis,Rest if severe
+Rosacea,Indoor exercises
+Rosacea,Swimming
+Rosacea,Yoga
+Rosacea,Avoid hot environments
+Rosacea,Cool down properly
+Shingles,Rest primarily
+Shingles,Light walking when comfortable
+Shingles,Gentle stretching
+Shingles,Avoid contact sports
+Urticaria,Light walking
+Urticaria,Yoga
+Urticaria,Avoid strenuous exercise during flare
+Urticaria,Swimming in cool water
+COPD,Walking
+COPD,Breathing exercises
+COPD,Pursed-lip breathing
+COPD,Light stretching
+COPD,Pulmonary rehabilitation
+Sinusitis,Light walking
+Sinusitis,Yoga
+Sinusitis,Avoid swimming
+Sinusitis,Avoid diving
+Sinusitis,Rest if acute
+Tonsillitis,Complete rest
+Tonsillitis,No exercise during acute phase
+Tonsillitis,Light walking during recovery
+Post-viral Cough,Light walking
+Post-viral Cough,Gentle breathing exercises
+Post-viral Cough,Yoga
+Post-viral Cough,Avoid strenuous exercise
+Pharyngitis,Rest
+Pharyngitis,Light walking if mild
+Pharyngitis,Avoid strenuous exercise
+IBS,Walking
+IBS,Yoga
+IBS,Swimming
+IBS,Cycling
+IBS,Stress-reducing exercises
+Gastritis,Walking
+Gastritis,Yoga
+Gastritis,Light cycling
+Gastritis,Avoid intense exercise after eating
+Food Poisoning,Complete rest
+Food Poisoning,No exercise until recovered
+Food Poisoning,Light walking after recovery
+Peptic Ulcer,Walking
+Peptic Ulcer,Yoga
+Peptic Ulcer,Light stretching
+Peptic Ulcer,Stress-reduction exercises
+Tension Headache,Walking
+Tension Headache,Yoga
+Tension Headache,Neck stretches
+Tension Headache,Shoulder exercises
+Tension Headache,Relaxation techniques
+Cervical Radiculopathy,Neck stretches
+Cervical Radiculopathy,Shoulder exercises
+Cervical Radiculopathy,Walking
+Cervical Radiculopathy,Swimming
+Cervical Radiculopathy,Yoga
+Cervical Radiculopathy,Physical therapy exercises
+Vertigo,Balance exercises
+Vertigo,Brandt-Daroff exercises
+Vertigo,Walking carefully
+Vertigo,Tai Chi
+Vertigo,Avoid sudden movements
+PCOS,Brisk walking
+PCOS,Cycling
+PCOS,Swimming
+PCOS,Strength training
+PCOS,Yoga
+PCOS,HIIT exercises
+Viral Fever,Complete rest
+Viral Fever,No exercise during fever
+Viral Fever,Light walking after recovery
+Flu,Complete rest
+Flu,No exercise during acute phase
+Flu,Light walking during recovery
+Angina,Walking at moderate pace
+Angina,Light activities as tolerated
+Angina,Cardiac rehabilitation if advised
+Angina,Avoid sudden exertion
+Palpitations,Walking
+Palpitations,Yoga
+Palpitations,Swimming
+Palpitations,Avoid high-intensity exercise during episodes
+Palpitations,Relaxation techniques
+Kidney Stones,Walking
+Kidney Stones,Light jogging
+Kidney Stones,Stay active to prevent stones
+Kidney Stones,Avoid dehydration during exercise
+Diaper Rash,Tummy time for baby
+Diaper Rash,Allow diaper-free time
+Diaper Rash,Gentle play
+Otitis Media,Rest during acute phase
+Otitis Media,Light activities as tolerated
+Otitis Media,Avoid swimming until healed
+Hand Foot Mouth Disease,Complete rest
+Hand Foot Mouth Disease,No activities during acute phase
+Hand Foot Mouth Disease,Light play when recovering
+Muscle Strain,Rest initially
+Muscle Strain,Gentle stretching after acute phase
+Muscle Strain,Gradual return to activity
+Muscle Strain,Physical therapy if needed
+Muscle Strain,Swimming for recovery
+Sciatica,Walking
+Sciatica,Swimming
+Sciatica,Stretching exercises
+Sciatica,Yoga
+Sciatica,Core strengthening
+Sciatica,Avoid heavy lifting
+Urinary Tract Infection,Light walking
+Urinary Tract Infection,Pelvic floor exercises (when healed)
+Urinary Tract Infection,Rest during acute phase
+Urinary Tract Infection,Yoga
+COVID-19,Complete rest during illness
+COVID-19,Light walking after recovery
+COVID-19,Breathing exercises post-recovery
+COVID-19,Gradual return to activity
+Meningitis,Complete rest
+Meningitis,No exercise during acute phase
+Meningitis,Physiotherapy during recovery
+Meningitis,Light activities as tolerated
+Anemia,Light walking
+Anemia,Yoga
+Anemia,Avoid strenuous exercise
+Anemia,Rest when feeling weak
+Anemia,Gradual increase in activity
+Conjunctivitis,Rest
+Conjunctivitis,Avoid swimming
+Conjunctivitis,Light walking if comfortable
+Conjunctivitis,Avoid dusty environments
+Seborrheic Dermatitis,Light walking
+Seborrheic Dermatitis,Yoga
+Seborrheic Dermatitis,Avoid excessive sweating
+Seborrheic Dermatitis,Shower after exercise
+Ringworm,Light walking
+Ringworm,Avoid contact sports
+Ringworm,Avoid swimming pools
+Ringworm,Shower after exercise
+Ringworm,Keep affected area dry

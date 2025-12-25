@@ -1,0 +1,48 @@
+Disease,Doctor
+Fungal infection,Dermatologist
+Acne,Dermatologist
+Psoriasis,Dermatologist
+Impetigo,Dermatologist
+Chicken pox,General Physician
+Allergy,Allergist/Immunologist
+Drug Reaction,Allergist/Immunologist
+AIDS,Infectious Disease Specialist
+GERD,Gastroenterologist
+Chronic cholestasis,Gastroenterologist
+Peptic ulcer disease,Gastroenterologist
+Gastroenteritis,Gastroenterologist
+Jaundice,Gastroenterologist
+Dimorphic hemmorhoids(piles),Proctologist/Surgeon
+hepatitis A,Hepatologist
+Hepatitis B,Hepatologist
+Hepatitis C,Hepatologist
+Hepatitis D,Hepatologist
+Hepatitis E,Hepatologist
+Alcoholic hepatitis,Hepatologist
+Diabetes,Endocrinologist
+Hypothyroidism,Endocrinologist
+Hyperthyroidism,Endocrinologist
+Hypoglycemia,Endocrinologist
+Bronchial Asthma,Pulmonologist
+Common Cold,General Physician
+Pneumonia,Pulmonologist
+Tuberculosis,Pulmonologist
+Hypertension,Cardiologist
+Heart attack,Cardiologist
+Varicose veins,Vascular Surgeon
+Migraine,Neurologist
+Paralysis (brain hemorrhage),Neurologist
+(vertigo) Paroymsal Positional Vertigo,ENT Specialist/Neurologist
+Malaria,General Physician/Infectious Disease Specialist
+Dengue,General Physician/Infectious Disease Specialist
+Typhoid,General Physician
+Cervical spondylosis,Orthopedic/Rheumatologist
+Osteoarthristis,Rheumatologist
+Arthritis,Rheumatologist
+Urinary tract infection,Urologist
+COVID-19,General Physician/Infectious Disease Specialist
+Meningitis,Neurologist
+Anemia,Hematologist/General Physician
+Conjunctivitis,Ophthalmologist
+Seborrheic Dermatitis,Dermatologist
+Ringworm,Dermatologist

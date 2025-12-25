@@ -1,0 +1,606 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Check Symptoms - MediSense</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="MediSense"
+                    style="height: 42px; width: 42px; object-fit: cover; margin-right: 12px; border-radius: 50%;">
+                <span>MediSense</span>
+            </a>
+            <div class="d-flex align-items-center">
+                <button class="theme-btn me-3" id="themeToggle" title="Toggle Theme"><i
+                        class="fa-solid fa-moon"></i></button>
+                <a href="/patient_dashboard" class="btn btn-outline-secondary btn-sm">Dashboard</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5 pt-5">
+        {% if predicted_disease %}
+        <div class="row g-4 justify-content-center align-items-start">
+            <!-- Input Section (Side Panel) -->
+            <div class="col-lg-4">
+                <div class="card-pro p-4 h-100 sticky-top" style="top: 100px; z-index: 1;">
+                    <div class="text-center mb-3">
+                        <div class="bg-primary bg-opacity-10 p-2 rounded-circle d-inline-block text-primary mb-2">
+                            <i class="fa-solid fa-stethoscope fa-lg"></i>
+                        </div>
+                        <h4 class="fw-bold text-main">New Diagnosis</h4>
+                        <p class="small text-secondary">Check another symptom anytime.</p>
+                    </div>
+
+                    <form action="/predict" method="post">
+                        <div class="mb-3">
+                            <div class="input-group">
+                                <textarea class="form-control" id="symptoms" name="symptoms" rows="3"
+                                    placeholder="Describe symptoms..."
+                                    required>{% if user_input %}{{ user_input }}{% endif %}</textarea>
+                                <span class="input-group-text bg-transparent border-start-0 cursor-pointer"
+                                    id="voiceBtn" title="Use Voice">
+                                    <i class="fas fa-microphone text-primary"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row g-2 mb-3">
+                            <div class="col-6">
+                                <input type="number" class="form-control form-control-sm" name="age" placeholder="Age"
+                                    min="1" max="120">
+                            </div>
+                            <div class="col-6">
+                                <select class="form-select form-select-sm" name="gender">
+                                    <option value="">Gender</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary-gradient w-100 shadow-sm">
+                            Re-Analyze <i class="fa-solid fa-rotate-right ms-2"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Results Section (Main Panel) - Enhanced UI -->
+            <div class="col-lg-8">
+                <div class="card-pro p-4 p-md-5 border-primary border-opacity-25" id="resultSection">
+                    <!-- Status Badge -->
+                    <div class="text-center mb-4">
+                        <span
+                            class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-20 px-3 py-2 rounded-pill mb-3">
+                            <i class="fa-solid fa-check me-1"></i> Analysis Complete
+                        </span>
+
+                        <!-- Diagnosis Result with Enhanced Visual -->
+                        <div class="diagnosis-result-container py-4 px-3 mb-4 rounded-4"
+                            style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.05) 0%, rgba(139, 92, 246, 0.08) 100%); border: 1px solid rgba(99, 102, 241, 0.15);">
+                            <div class="d-flex justify-content-center align-items-center gap-3 mb-3">
+                                {% if 'EMERGENCY' in predicted_disease %}
+                                <div class="diagnosis-icon bg-danger bg-opacity-10 rounded-circle p-3">
+                                    <i class="fa-solid fa-triangle-exclamation fa-2x text-danger"></i>
+                                </div>
+                                {% else %}
+                                <div class="diagnosis-icon bg-primary bg-opacity-10 rounded-circle p-3">
+                                    <i class="fa-solid fa-stethoscope fa-2x text-primary"></i>
+                                </div>
+                                {% endif %}
+                            </div>
+                            <h1
+                                class="display-5 fw-bold mb-3 {% if 'EMERGENCY' in predicted_disease %}text-danger{% else %}text-main{% endif %}">
+                                {{ predicted_disease }}
+                            </h1>
+
+                            <!-- Color-Coded Confidence Badge -->
+                            <div class="d-flex justify-content-center gap-2 align-items-center mb-3">
+                                <span class="text-muted small fw-bold text-uppercase ls-1">Confidence:</span>
+                                {% if confidence_level == 'HIGH' %}
+                                <span class="badge px-3 py-2 rounded-pill"
+                                    style="background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.3);">
+                                    <i class="fa-solid fa-circle-check me-1"></i>HIGH
+                                </span>
+                                {% elif confidence_level == 'MEDIUM' %}
+                                <span class="badge px-3 py-2 rounded-pill"
+                                    style="background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3);">
+                                    <i class="fa-solid fa-circle-half-stroke me-1"></i>MEDIUM
+                                </span>
+                                {% else %}
+                                <span class="badge px-3 py-2 rounded-pill"
+                                    style="background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3);">
+                                    <i class="fa-solid fa-circle-exclamation me-1"></i>LOW
+                                </span>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- Reason Text -->
+                        <p class="confidence-reason text-muted small px-3" style="max-width: 500px; margin: 0 auto;">
+                            <i class="fa-solid fa-info-circle me-1 text-primary"></i>
+                            {{ reason | default("Symptoms are non-specific. Please consult a General Physician.") }}
+                        </p>
+                    </div>
+
+                    <!-- UX Feature: Follow-up Questions for LOW/MEDIUM Confidence -->
+                    {% if show_followup and followup_questions %}
+                    <div class="followup-section mb-4 rounded-4 overflow-hidden"
+                        style="border: 1px solid rgba(99, 102, 241, 0.2);">
+                        <!-- Header -->
+                        <div class="py-3 px-4"
+                            style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.15) 100%);">
+                            <div class="d-flex align-items-center gap-2">
+                                <div class="bg-primary bg-opacity-10 rounded-circle p-2">
+                                    <i class="fa-solid fa-wand-magic-sparkles text-primary"></i>
+                                </div>
+                                <div>
+                                    <h6 class="mb-0 fw-bold text-primary">Refine Your Diagnosis</h6>
+                                    <small class="text-muted">Answer these quick questions for better accuracy</small>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Body -->
+                        <div class="p-4" style="background: var(--bg-card);">
+                            <form action="/predict" method="post">
+                                <input type="hidden" name="symptoms" value="{{ user_input }}">
+                                <input type="hidden" name="is_followup" value="true">
+                                <input type="hidden" name="age" value="{{ request.form.get('age', '') }}">
+                                <input type="hidden" name="gender" value="{{ request.form.get('gender', '') }}">
+                                <input type="hidden" name="original_confidence" value="{{ confidence_level }}">
+                                <input type="hidden" name="original_disease" value="{{ predicted_disease }}">
+
+                                {% for q in followup_questions %}
+                                <div
+                                    class="mb-4 {% if not loop.last %}pb-3 border-bottom border-secondary border-opacity-10{% endif %}">
+                                    <div class="d-flex align-items-start gap-3">
+                                        <div class="step-number bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
+                                            style="width: 28px; height: 28px; font-size: 0.8rem; font-weight: 600;">
+                                            {{ loop.index }}
+                                        </div>
+                                        <div class="flex-grow-1">
+                                            <label class="form-label fw-medium mb-2">{{ q.text }}</label>
+                                            {% if q.type == 'yes_no' %}
+                                            <div class="d-flex gap-2">
+                                                <input type="radio" class="btn-check" name="{{ q.id }}"
+                                                    id="{{ q.id }}_yes" value="yes">
+                                                <label class="btn btn-outline-success flex-grow-1 py-2"
+                                                    for="{{ q.id }}_yes">
+                                                    <i class="fa-solid fa-check me-1"></i>Yes
+                                                </label>
+                                                <input type="radio" class="btn-check" name="{{ q.id }}"
+                                                    id="{{ q.id }}_no" value="no">
+                                                <label class="btn btn-outline-secondary flex-grow-1 py-2"
+                                                    for="{{ q.id }}_no">
+                                                    <i class="fa-solid fa-xmark me-1"></i>No
+                                                </label>
+                                            </div>
+                                            {% else %}
+                                            <input type="text" class="form-control" name="{{ q.id }}"
+                                                placeholder="Type your answer...">
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+
+                                <button type="submit" class="btn btn-primary-gradient w-100 py-3 mt-2">
+                                    <i class="fa-solid fa-arrow-rotate-right me-2"></i>Re-Analyze with More Details
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <!-- Action Grid (Information) -->
+                    <div class="mb-4">
+                        <h6 class="text-muted small fw-bold text-uppercase ls-1 mb-3">
+                            <i class="fa-solid fa-grid-2 me-2"></i>Health Information
+                        </h6>
+                        <div class="row g-3">
+                            <div class="col-6 col-md-4">
+                                <button
+                                    class="action-tile btn w-100 py-4 d-flex flex-column align-items-center gap-2 h-100 rounded-4 border border-secondary border-opacity-15"
+                                    style="background: var(--bg-card); transition: all 0.3s ease;"
+                                    onmouseover="this.style.borderColor='rgba(99, 102, 241, 0.4)'; this.style.boxShadow='0 4px 20px rgba(99, 102, 241, 0.15)'"
+                                    onmouseout="this.style.borderColor='rgba(108, 117, 125, 0.15)'; this.style.boxShadow='none'"
+                                    data-bs-toggle="modal" data-bs-target="#descriptionModal">
+                                    <div class="bg-primary bg-opacity-10 rounded-circle p-2 mb-1">
+                                        <i class="fa-solid fa-file-medical text-primary fa-lg"></i>
+                                    </div>
+                                    <span class="fw-medium text-main">Description</span>
+                                </button>
+                            </div>
+                            <div class="col-6 col-md-4">
+                                <button
+                                    class="action-tile btn w-100 py-4 d-flex flex-column align-items-center gap-2 h-100 rounded-4 border border-secondary border-opacity-15"
+                                    style="background: var(--bg-card); transition: all 0.3s ease;"
+                                    onmouseover="this.style.borderColor='rgba(34, 211, 238, 0.4)'; this.style.boxShadow='0 4px 20px rgba(34, 211, 238, 0.15)'"
+                                    onmouseout="this.style.borderColor='rgba(108, 117, 125, 0.15)'; this.style.boxShadow='none'"
+                                    data-bs-toggle="modal" data-bs-target="#precautionModal">
+                                    <div class="bg-info bg-opacity-10 rounded-circle p-2 mb-1">
+                                        <i class="fa-solid fa-shield-virus text-info fa-lg"></i>
+                                    </div>
+                                    <span class="fw-medium text-main">Precautions</span>
+                                </button>
+                            </div>
+                            <div class="col-6 col-md-4">
+                                <button
+                                    class="action-tile btn w-100 py-4 d-flex flex-column align-items-center gap-2 h-100 rounded-4 border border-secondary border-opacity-15"
+                                    style="background: var(--bg-card); transition: all 0.3s ease;"
+                                    onmouseover="this.style.borderColor='rgba(239, 68, 68, 0.4)'; this.style.boxShadow='0 4px 20px rgba(239, 68, 68, 0.15)'"
+                                    onmouseout="this.style.borderColor='rgba(108, 117, 125, 0.15)'; this.style.boxShadow='none'"
+                                    data-bs-toggle="modal" data-bs-target="#medicationsModal">
+                                    <div class="bg-danger bg-opacity-10 rounded-circle p-2 mb-1">
+                                        <i class="fa-solid fa-pills text-danger fa-lg"></i>
+                                    </div>
+                                    <span class="fw-medium text-main">Medications</span>
+                                </button>
+                            </div>
+                            <div class="col-6 col-md-4">
+                                <button
+                                    class="action-tile btn w-100 py-4 d-flex flex-column align-items-center gap-2 h-100 rounded-4 border border-secondary border-opacity-15"
+                                    style="background: var(--bg-card); transition: all 0.3s ease;"
+                                    onmouseover="this.style.borderColor='rgba(16, 185, 129, 0.4)'; this.style.boxShadow='0 4px 20px rgba(16, 185, 129, 0.15)'"
+                                    onmouseout="this.style.borderColor='rgba(108, 117, 125, 0.15)'; this.style.boxShadow='none'"
+                                    data-bs-toggle="modal" data-bs-target="#workoutsModal">
+                                    <div class="bg-success bg-opacity-10 rounded-circle p-2 mb-1">
+                                        <i class="fa-solid fa-person-running text-success fa-lg"></i>
+                                    </div>
+                                    <span class="fw-medium text-main">Workouts</span>
+                                </button>
+                            </div>
+                            <div class="col-6 col-md-4">
+                                <button
+                                    class="action-tile btn w-100 py-4 d-flex flex-column align-items-center gap-2 h-100 rounded-4 border border-secondary border-opacity-15"
+                                    style="background: var(--bg-card); transition: all 0.3s ease;"
+                                    onmouseover="this.style.borderColor='rgba(245, 158, 11, 0.4)'; this.style.boxShadow='0 4px 20px rgba(245, 158, 11, 0.15)'"
+                                    onmouseout="this.style.borderColor='rgba(108, 117, 125, 0.15)'; this.style.boxShadow='none'"
+                                    data-bs-toggle="modal" data-bs-target="#dietsModal">
+                                    <div class="bg-warning bg-opacity-10 rounded-circle p-2 mb-1">
+                                        <i class="fa-solid fa-utensils text-warning fa-lg"></i>
+                                    </div>
+                                    <span class="fw-medium text-main">Diets</span>
+                                </button>
+                            </div>
+                            <div class="col-6 col-md-4">
+                                {% if pdf_report_url %}
+                                <a href="{{ pdf_report_url }}" target="_blank"
+                                    class="action-tile btn w-100 py-4 d-flex flex-column align-items-center gap-2 h-100 rounded-4 border border-secondary border-opacity-15"
+                                    style="background: var(--bg-card); transition: all 0.3s ease; text-decoration: none;"
+                                    onmouseover="this.style.borderColor='rgba(139, 92, 246, 0.4)'; this.style.boxShadow='0 4px 20px rgba(139, 92, 246, 0.15)'"
+                                    onmouseout="this.style.borderColor='rgba(108, 117, 125, 0.15)'; this.style.boxShadow='none'">
+                                    <div class="bg-purple bg-opacity-10 rounded-circle p-2 mb-1"
+                                        style="background: rgba(139, 92, 246, 0.1);">
+                                        <i class="fa-solid fa-file-pdf fa-lg" style="color: #8b5cf6;"></i>
+                                    </div>
+                                    <span class="fw-medium text-main">PDF Report</span>
+                                </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- UX Feature: Explainable Diagnosis Panel -->
+                    {% if explanation and (explanation.matched_primary or explanation.matched_supporting) %}
+                    <div class="mb-4">
+                        <button class="btn btn-link text-decoration-none p-0 text-primary small" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#explanationPanel">
+                            <i class="fa-solid fa-lightbulb me-1"></i>Why this diagnosis? <i
+                                class="fa-solid fa-chevron-down ms-1 small"></i>
+                        </button>
+                        <div class="collapse mt-3" id="explanationPanel">
+                            <div class="card" style="background: var(--bg-card); border: 1px solid var(--border-main);">
+                                <div class="card-body">
+                                    <div class="row g-3">
+                                        {% if explanation.matched_primary %}
+                                        <div class="col-md-3">
+                                            <h6 class="small text-success fw-bold mb-2">
+                                                <i class="fa-solid fa-circle-check me-1"></i>Matched Primary
+                                            </h6>
+                                            <div class="d-flex flex-wrap gap-1">
+                                                {% for sym in explanation.matched_primary %}
+                                                <span
+                                                    class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25">{{
+                                                    sym }}</span>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                        {% endif %}
+                                        {% if explanation.matched_supporting %}
+                                        <div class="col-md-3">
+                                            <h6 class="small text-info fw-bold mb-2">
+                                                <i class="fa-solid fa-circle-plus me-1"></i>Supporting Symptoms
+                                            </h6>
+                                            <div class="d-flex flex-wrap gap-1">
+                                                {% for sym in explanation.matched_supporting %}
+                                                <span
+                                                    class="badge bg-info bg-opacity-10 text-info border border-info border-opacity-25">{{
+                                                    sym }}</span>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                        {% endif %}
+                                        {% if explanation.missing_primary %}
+                                        <div class="col-md-3">
+                                            <h6 class="small text-warning fw-bold mb-2">
+                                                <i class="fa-solid fa-circle-question me-1"></i>Not Mentioned
+                                            </h6>
+                                            <div class="d-flex flex-wrap gap-1">
+                                                {% for sym in explanation.missing_primary %}
+                                                <span
+                                                    class="badge bg-warning bg-opacity-10 text-warning border border-warning border-opacity-25">{{
+                                                    sym }}</span>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                        {% endif %}
+                                        {% if explanation.newly_confirmed %}
+                                        <div class="col-md-3">
+                                            <h6 class="small fw-bold mb-2" style="color: #8b5cf6;">
+                                                <i class="fa-solid fa-circle-check me-1"></i>Confirmed via Follow-up
+                                            </h6>
+                                            <div class="d-flex flex-wrap gap-1">
+                                                {% for sym in explanation.newly_confirmed %}
+                                                <span class="badge border"
+                                                    style="background: rgba(139, 92, 246, 0.1); color: #8b5cf6; border-color: rgba(139, 92, 246, 0.25) !important;">{{
+                                                    sym }}</span>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <!-- Distinct Doctor Button (CTA) -->
+                    {% set specialist = my_doctor[0] if my_doctor and my_doctor|length > 0 else 'General Physician' %}
+                    <div class="mt-4 pt-3 border-top border-secondary border-opacity-10">
+                        <a href="/view_doctors?specialization={{ specialist }}&log_id={{ log_id }}"
+                            class="btn btn-primary-gradient w-100 py-4 fs-5 shadow-lg d-flex align-items-center justify-content-between px-4 position-relative overflow-hidden group-hover">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="bg-white text-primary rounded-circle p-2 shadow-sm">
+                                    <i class="fa-solid fa-user-doctor fa-lg"></i>
+                                </div>
+                                <div class="text-start lh-1">
+                                    <div class="fw-bold">Find a {{ specialist }}</div>
+                                    <small class="text-white-50" style="font-size: 0.85rem;">Book an appointment for {{
+                                        predicted_disease }}</small>
+                                </div>
+                            </div>
+                            <i class="fa-solid fa-arrow-right fa-lg"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <!-- Centered Input View (Default) -->
+        <div class="row justify-content-center align-items-center" style="min-height: 80vh;">
+            <div class="col-lg-6">
+                <div class="card-pro p-5 border-0 shadow-lg">
+                    <div class="text-center mb-5">
+                        <div class="bg-primary bg-opacity-10 p-4 rounded-circle d-inline-block text-primary mb-4">
+                            <i class="fa-solid fa-stethoscope fa-3x"></i>
+                        </div>
+                        <h2 class="display-6 fw-bold text-main mb-2">Check Your Symptoms</h2>
+                        <p class="text-secondary fs-5">Describe what you're feeling, and our AI will suggest a
+                            diagnosis.</p>
+                    </div>
+
+                    <form action="/predict" method="post">
+                        <div class="mb-4">
+                            <label class="form-label text-main fw-bold">Describe Symptoms</label>
+                            <div class="input-group input-group-lg">
+                                <span class="input-group-text bg-light border-end-0">
+                                    <i class="fa-solid fa-keyboard text-muted"></i>
+                                </span>
+                                <input type="text" class="form-control bg-light border-start-0" id="symptoms"
+                                    name="symptoms" placeholder="e.g. skin rash, fever, headache..." required>
+                                <span class="input-group-text bg-white border-start-0 cursor-pointer" id="voiceBtn"
+                                    title="Use Voice">
+                                    <i class="fas fa-microphone text-primary"></i>
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Age & Gender (Visible) -->
+                        <div class="mb-4">
+                            <label class="form-label text-main fw-medium small">Age & Gender <span
+                                    class="text-muted">(Optional)</span></label>
+                            <div class="row g-2">
+                                <div class="col-6">
+                                    <input type="number" class="form-control" name="age" placeholder="Your Age" min="1"
+                                        max="120">
+                                </div>
+                                <div class="col-6">
+                                    <select class="form-select" name="gender">
+                                        <option value="">Select Gender</option>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit"
+                            class="btn btn-primary-gradient w-100 btn-lg py-3 fw-bold shadow-lg transition-all">
+                            Analyze Symptoms <i class="fa-solid fa-arrow-right ms-2"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Modals (Independent) -->
+    <!-- Description Modal -->
+    <div class="modal fade" id="descriptionModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold text-primary">Disease Description</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-main fs-5">{{ dis_des }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Precaution Modal -->
+    <div class="modal fade" id="precautionModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold text-info">Precautions</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <ul class="list-group list-group-flush">
+                        {% for i in my_precautions %}
+                        <li class="list-group-item bg-transparent text-main py-3"><i
+                                class="fa-solid fa-check-circle text-info me-2"></i>{{ i }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Medications Modal -->
+    <div class="modal fade" id="medicationsModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold text-danger">Recommended Medications</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-warning small"><i class="fa-solid fa-triangle-exclamation me-1"></i> Consult
+                        a doctor before taking any medication.</div>
+                    <ul class="list-group list-group-flush">
+                        {% for i in medications %}
+                        <li class="list-group-item bg-transparent text-main py-3"><i
+                                class="fa-solid fa-capsules text-danger me-2"></i>{{ i }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Workouts Modal -->
+    <div class="modal fade" id="workoutsModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold text-success">Recommended Workouts</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <ul class="list-group list-group-flush">
+                        {% for i in workout %}
+                        <li class="list-group-item bg-transparent text-main py-3"><i
+                                class="fa-solid fa-person-walking text-success me-2"></i>{{ i }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Diets Modal -->
+    <div class="modal fade" id="dietsModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold text-warning">Recommended Diet</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <ul class="list-group list-group-flush">
+                        {% for i in my_diet %}
+                        <li class="list-group-item bg-transparent text-main py-3"><i
+                                class="fa-solid fa-apple-whole text-warning me-2"></i>{{ i }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script for Voice Recognition -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const voiceBtn = document.getElementById('voiceBtn');
+            const symptomsInput = document.getElementById('symptoms');
+
+            if (voiceBtn && symptomsInput) {
+                // Check browser support
+                if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                    const recognition = new SpeechRecognition();
+                    recognition.lang = 'en-US';
+                    recognition.continuous = false;
+                    recognition.interimResults = false;
+
+                    voiceBtn.addEventListener('click', function () {
+                        try {
+                            recognition.start();
+                            voiceBtn.classList.add('text-danger'); // Visual feedback
+                            voiceBtn.querySelector('i').classList.add('fa-beat-fade');
+                        } catch (e) {
+                            console.error("Recognition start error:", e);
+                        }
+                    });
+
+                    recognition.onresult = function (event) {
+                        const transcript = event.results[0][0].transcript;
+                        const currentVal = symptomsInput.value;
+                        // Append if there is text, else set
+                        symptomsInput.value = currentVal ? currentVal + ' ' + transcript : transcript;
+                        voiceBtn.classList.remove('text-danger');
+                        voiceBtn.querySelector('i').classList.remove('fa-beat-fade');
+                    };
+
+                    recognition.onerror = function (event) {
+                        console.error("Voice error:", event.error);
+                        voiceBtn.classList.remove('text-danger');
+                        voiceBtn.querySelector('i').classList.remove('fa-beat-fade');
+                        alert("Voice input failed or not allowed. Please type manually.");
+                    };
+
+                    recognition.onend = function () {
+                        voiceBtn.classList.remove('text-danger');
+                        voiceBtn.querySelector('i').classList.remove('fa-beat-fade');
+                    };
+
+                } else {
+                    console.warn("Speech API not supported");
+                    voiceBtn.style.display = 'none'; // Hide if not supported
+                }
+            }
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/theme.js') }}"></script>
+</body>
+
+</html>

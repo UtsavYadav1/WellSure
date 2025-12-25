@@ -1,0 +1,862 @@
+/* Pro SaaS Design System - MediMind AI */
+
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;700&display=swap');
+
+:root {
+    /* Core Palette - Dark Mode Default */
+    --primary: #00bcd4;
+    --primary-hover: #00acc1;
+    --secondary: #2c3e50;
+    --accent: #ff4081;
+
+    /* Backgrounds */
+    --bg-main: #0f1115;
+    --bg-card: #181a20;
+    --bg-surface: #23262d;
+    --bg-input: #23262d;
+
+    /* Text */
+    --text-main: #ffffff;
+    --text-secondary: #d1d1d6;
+    /* Improved contrast for Dark Mode (was #a1a1aa) */
+    --text-muted: #9ca3af;
+    /* Improved contrast for Dark Mode (was #71717a) */
+    --text-inverse: #000000;
+
+    /* Borders & Glass */
+    --border-color: rgba(255, 255, 255, 0.1);
+    --glass-bg: rgba(24, 26, 32, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.08);
+
+    /* Shadows */
+    --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+    --shadow-glow: 0 0 20px rgba(0, 188, 212, 0.15);
+
+    /* Radius */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 20px;
+
+    /* Transitions */
+    --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Light Theme Variables - High Contrast */
+body.light-theme {
+    --bg-main: #f0f4f8;
+    --bg-card: #ffffff;
+    --bg-surface: #e2e8f0;
+    --bg-input: #ffffff;
+
+    /* Text - Darker for readability */
+    --text-main: #0f172a;
+    /* Almost Black */
+    --text-secondary: #334155;
+    /* Dark Slate */
+    --text-muted: #64748b;
+    /* Slate */
+    --text-inverse: #ffffff;
+
+    --border-color: #cbd5e1;
+    --glass-bg: rgba(255, 255, 255, 0.95);
+    --glass-border: rgba(148, 163, 184, 0.3);
+
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+    --shadow-glow: 0 4px 20px rgba(0, 188, 212, 0.15);
+}
+
+/* Global Reset & Typography */
+body {
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding-top: 76px;
+    /* Navbar height */
+    line-height: 1.6;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    overflow-x: hidden;
+}
+
+/* Theme-aware Text Utilities */
+.text-main {
+    color: var(--text-main) !important;
+}
+
+.text-secondary {
+    color: var(--text-secondary) !important;
+}
+
+.text-muted {
+    color: var(--text-muted) !important;
+}
+
+.text-inverse {
+    color: var(--text-inverse) !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.navbar-brand {
+    font-family: 'Outfit', sans-serif;
+    color: var(--text-main);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: var(--transition);
+}
+
+/* Navigation Bar */
+.navbar {
+    background-color: var(--glass-bg) !important;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border-color);
+    padding: 12px 0;
+    z-index: 1000;
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--primary) 0%, #4dd0e1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.nav-link {
+    color: var(--text-secondary) !important;
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 8px 16px !important;
+    border-radius: var(--radius-sm);
+    transition: var(--transition);
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: var(--primary) !important;
+    background: rgba(0, 188, 212, 0.1);
+}
+
+/* Landing Page - Hero Section */
+.hero-section {
+    position: relative;
+    padding: 120px 0 100px;
+    text-align: center;
+    overflow: hidden;
+}
+
+/* Background grid effect */
+.hero-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(var(--border-color) 1px, transparent 1px);
+    background-size: 40px 40px;
+    opacity: 0.3;
+    z-index: -1;
+    mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+}
+
+.hero-title {
+    font-size: 4rem;
+    line-height: 1.1;
+    font-weight: 800;
+    margin-bottom: 24px;
+    letter-spacing: -0.02em;
+    color: var(--text-main);
+}
+
+.hero-title span {
+    background: linear-gradient(to right, var(--primary), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-subtitle {
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+    max-width: 640px;
+    margin: 0 auto 40px;
+}
+
+/* Cards (Glassmorphism & Pro) */
+.card-pro {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 24px;
+    transition: var(--transition);
+    box-shadow: var(--shadow-sm);
+    height: 100%;
+    color: var(--text-main);
+}
+
+.card-pro:hover {
+    transform: translateY(-4px);
+    border-color: var(--primary);
+    box-shadow: var(--shadow-glow);
+}
+
+.glass-container {
+    background: var(--bg-card);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(12px);
+    border-radius: var(--radius-lg);
+    padding: 40px;
+    box-shadow: var(--shadow-lg);
+    color: var(--text-main);
+}
+
+/* Form Styles - High Visibility */
+.form-label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text-main);
+    margin-bottom: 8px;
+}
+
+.form-control,
+.form-select {
+    background-color: var(--bg-input);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    border-radius: var(--radius-sm);
+    padding: 12px 16px;
+    font-size: 0.95rem;
+    transition: var(--transition);
+}
+
+.form-control:focus,
+.form-select:focus {
+    background-color: var(--bg-input);
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(0, 188, 212, 0.1);
+    color: var(--text-main);
+    outline: none;
+}
+
+.form-control::placeholder {
+    color: var(--text-muted);
+}
+
+/* Specific fix for dropdown options visibility */
+.form-select option {
+    background-color: var(--bg-card);
+    color: var(--text-main);
+}
+
+/* Dropdown Arrow Fix */
+.form-select {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%2300bcd4' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 16px 12px;
+}
+
+/* Inputs Groups & Addons */
+.input-group-text {
+    background-color: var(--bg-surface);
+    border-color: var(--border-color);
+    color: var(--text-secondary);
+}
+
+/* Buttons */
+.btn {
+    font-weight: 600;
+    padding: 10px 24px;
+    border-radius: var(--radius-sm);
+    transition: var(--transition);
+    border: none;
+}
+
+.btn-primary-gradient {
+    background: linear-gradient(135deg, var(--primary) 0%, #0097a7 100%);
+    color: white;
+    box-shadow: 0 4px 12px rgba(0, 188, 212, 0.3);
+}
+
+.btn-primary-gradient:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 188, 212, 0.4);
+    color: white;
+}
+
+.btn-outline-secondary {
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    background: transparent;
+}
+
+.btn-outline-secondary:hover {
+    border-color: var(--text-main);
+    background: var(--bg-surface);
+    color: var(--text-main);
+}
+
+/* New Theme Button */
+.theme-btn {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.theme-btn:hover {
+    background: var(--bg-card);
+    color: var(--primary);
+    transform: rotate(15deg);
+    border-color: var(--primary);
+}
+
+/* Tables - Fixed for Light Mode */
+.table {
+    --bs-table-bg: transparent;
+    --bs-table-color: var(--text-main);
+    --bs-table-border-color: var(--border-color);
+    color: var(--text-main);
+}
+
+.table th {
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    color: var(--text-secondary);
+    border-bottom-width: 1px;
+    padding: 16px;
+    background-color: var(--bg-surface);
+}
+
+.table td {
+    vertical-align: middle;
+    padding: 16px;
+    color: var(--text-main);
+    background-color: transparent;
+}
+
+.table-hover tbody tr:hover td {
+    background-color: var(--bg-surface);
+    color: var(--text-main);
+}
+
+/* Badges */
+.badge-pro {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.75rem;
+    letter-spacing: 0.02em;
+}
+
+.badge-success {
+    background: rgba(34, 197, 94, 0.1);
+    color: #10b981;
+    /* Darker green for visibility */
+    border: 1px solid rgba(34, 197, 94, 0.2);
+}
+
+.badge-warning {
+    background: rgba(234, 179, 8, 0.1);
+    color: #b45309;
+    /* Darker orange/brown */
+    border: 1px solid rgba(234, 179, 8, 0.2);
+}
+
+.badge-danger {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ff5f5f;
+    /* Brighter red for Dark Mode visibility */
+    border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.badge-info {
+    background: rgba(59, 130, 246, 0.1);
+    color: #2563eb;
+    /* Darker Blue */
+    border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+/* Modals */
+.modal-content {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    color: var(--text-main);
+}
+
+.modal-header,
+.modal-footer {
+    border-color: var(--border-color);
+}
+
+.modal-title {
+    color: var(--text-main);
+}
+
+.btn-close {
+    background: transparent url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23a1a1aa'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/%3e%3c/svg%3e") center/1em auto no-repeat;
+}
+
+body.light-theme .btn-close {
+    filter: brightness(0);
+    /* Make black in light mode */
+}
+
+/* Alerts */
+.alert {
+    border: none;
+    border-radius: var(--radius-sm);
+}
+
+/* Utilities */
+.text-gradient {
+    background: linear-gradient(to right, var(--primary), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.bg-surface {
+    background-color: var(--bg-surface) !important;
+}
+
+/* List Group Item Contrast Fix */
+.list-group-item {
+    background-color: transparent !important;
+    border-color: var(--border-color) !important;
+    color: var(--text-main) !important;
+}
+
+.list-group-item .text-secondary {
+    color: var(--text-secondary) !important;
+}
+
+.list-group-item .text-muted {
+    color: var(--text-muted) !important;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-main);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--glass-border);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--text-muted);
+}
+
+/* ============================================================================
+   RESPONSIVE MEDIA QUERIES
+   Mobile-first approach with breakpoints:
+   - Mobile: ≤576px
+   - Tablet: 577px - 992px  
+   - Desktop: ≥993px (default styles)
+   ============================================================================ */
+
+/* =========================== NAVBAR RESPONSIVE =========================== */
+
+/* Navbar toggler visibility fix for dark mode */
+.navbar-toggler {
+    border: 1px solid var(--border-color);
+    padding: 6px 10px;
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%2300bcd4' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+.navbar-toggler:focus {
+    box-shadow: 0 0 0 3px rgba(0, 188, 212, 0.25);
+}
+
+/* Collapsed navbar menu styling */
+.navbar-collapse {
+    background: var(--bg-card);
+    border-radius: var(--radius-md);
+    margin-top: 10px;
+    padding: 15px;
+    border: 1px solid var(--border-color);
+}
+
+@media (min-width: 992px) {
+    .navbar-collapse {
+        background: transparent;
+        border: none;
+        margin-top: 0;
+        padding: 0;
+    }
+}
+
+/* =========================== MOBILE STYLES (≤576px) =========================== */
+
+@media (max-width: 576px) {
+    /* Body & Container */
+    body {
+        padding-top: 70px;
+        font-size: 14px;
+    }
+    
+    .container {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    
+    /* Typography */
+    h1, .display-5 {
+        font-size: 1.75rem !important;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+    }
+    
+    h3, h4, h5 {
+        font-size: 1.15rem;
+    }
+    
+    /* Hero Section */
+    .hero-section {
+        padding: 60px 0 50px;
+    }
+    
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem;
+        padding: 0 10px;
+    }
+    
+    /* Cards */
+    .card-pro {
+        padding: 16px;
+        margin-bottom: 15px;
+    }
+    
+    .glass-container {
+        padding: 20px;
+    }
+    
+    /* Buttons */
+    .btn {
+        padding: 10px 16px;
+        font-size: 0.9rem;
+    }
+    
+    .btn-lg, .btn-primary-gradient {
+        padding: 12px 20px;
+        font-size: 1rem;
+    }
+    
+    /* Make CTA buttons full width on mobile */
+    .btn-primary-gradient.w-100 {
+        padding: 14px 20px;
+    }
+    
+    /* Dashboard header flex-wrap */
+    .d-flex.justify-content-between {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    
+    .d-flex.justify-content-between > * {
+        flex: 1 1 100%;
+    }
+    
+    .d-flex.justify-content-between .btn {
+        width: 100%;
+        margin-top: 10px;
+    }
+    
+    /* Quick action cards stack */
+    .row.g-4 > [class*="col-md"] {
+        margin-bottom: 10px;
+    }
+    
+    /* Tables - horizontal scroll */
+    .table-responsive {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .table {
+        min-width: 600px;
+    }
+    
+    .table th, .table td {
+        padding: 10px 8px;
+        font-size: 0.8rem;
+    }
+    
+    /* Modals - fit in screen */
+    .modal-dialog {
+        margin: 10px;
+        max-height: calc(100vh - 20px);
+    }
+    
+    .modal-content {
+        max-height: calc(100vh - 40px);
+        overflow-y: auto;
+    }
+    
+    .modal-body {
+        padding: 15px;
+    }
+    
+    /* Forms */
+    .form-control, .form-select {
+        padding: 10px 12px;
+        font-size: 0.9rem;
+    }
+    
+    .row.g-2 > [class*="col-"] {
+        margin-bottom: 8px;
+    }
+    
+    /* Follow-up questions */
+    .followup-section {
+        margin: 15px 0;
+    }
+    
+    .followup-section .p-4 {
+        padding: 15px !important;
+    }
+    
+    /* Explanation panel */
+    #explanationPanel .row.g-3 > [class*="col-md"] {
+        flex: 0 0 100%;
+        max-width: 100%;
+        margin-bottom: 15px;
+    }
+    
+    /* Action tiles grid */
+    .row.g-3 > .col-6.col-md-4 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+    
+    .action-tile {
+        padding: 15px 10px !important;
+    }
+    
+    .action-tile i.fa-lg {
+        font-size: 1rem;
+    }
+    
+    .action-tile span {
+        font-size: 0.8rem;
+    }
+    
+    /* Badges */
+    .badge {
+        font-size: 0.7rem;
+        padding: 4px 8px;
+    }
+    
+    /* Sticky side panel - make non-sticky on mobile */
+    .sticky-top {
+        position: relative !important;
+        top: auto !important;
+    }
+    
+    /* Diagnosis result container */
+    .diagnosis-result-container {
+        padding: 20px 15px !important;
+    }
+    
+    .diagnosis-result-container h1 {
+        font-size: 1.5rem !important;
+    }
+    
+    /* Doctor CTA button */
+    .btn-primary-gradient.py-4.fs-5 {
+        padding: 15px !important;
+        font-size: 1rem !important;
+    }
+    
+    .btn-primary-gradient.py-4.fs-5 .d-flex.align-items-center.gap-3 {
+        gap: 10px !important;
+    }
+    
+    .btn-primary-gradient.py-4.fs-5 .lh-1 div {
+        font-size: 0.9rem;
+    }
+    
+    .btn-primary-gradient.py-4.fs-5 .lh-1 small {
+        font-size: 0.75rem !important;
+    }
+}
+
+/* =========================== TABLET STYLES (577px - 992px) =========================== */
+
+@media (min-width: 577px) and (max-width: 992px) {
+    /* Body */
+    body {
+        padding-top: 75px;
+    }
+    
+    /* Typography */
+    h1, .display-5 {
+        font-size: 2.25rem !important;
+    }
+    
+    h2 {
+        font-size: 1.75rem;
+    }
+    
+    /* Hero */
+    .hero-section {
+        padding: 80px 0 70px;
+    }
+    
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    /* Cards */
+    .card-pro {
+        padding: 20px;
+    }
+    
+    .glass-container {
+        padding: 30px;
+    }
+    
+    /* Dashboard - 2 column grid */
+    .row.g-4 > .col-md-4 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+    
+    /* Tables */
+    .table th, .table td {
+        padding: 12px 10px;
+        font-size: 0.85rem;
+    }
+    
+    /* Modals */
+    .modal-dialog {
+        max-width: 90%;
+    }
+    
+    /* Explanation panel - 2 columns */
+    #explanationPanel .row.g-3 > [class*="col-md-3"] {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+    
+    /* Action tiles */
+    .row.g-3 > .col-6.col-md-4 {
+        flex: 0 0 33.333%;
+        max-width: 33.333%;
+    }
+    
+    /* Side panel */
+    .col-lg-4 .sticky-top {
+        position: relative !important;
+        top: auto !important;
+    }
+}
+
+/* =========================== GENERAL RESPONSIVE UTILITIES =========================== */
+
+/* Prevent horizontal overflow globally */
+html, body {
+    overflow-x: hidden;
+    max-width: 100%;
+}
+
+/* Image responsiveness */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Flex wrap for gap utilities */
+.d-flex {
+    flex-wrap: wrap;
+}
+
+@media (min-width: 992px) {
+    .d-flex {
+        flex-wrap: nowrap;
+    }
+}
+
+/* Table wrapper for responsiveness */
+.table-responsive {
+    border-radius: var(--radius-sm);
+}
+
+/* Modal scrollability */
+.modal-body {
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+@media (max-width: 576px) {
+    .modal-body {
+        max-height: 60vh;
+    }
+}
+
+/* Form row responsiveness */
+.row.g-2, .row.g-3 {
+    margin-left: -8px;
+    margin-right: -8px;
+}
+
+.row.g-2 > *, .row.g-3 > * {
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+/* Print styles - hide nav and show content nicely */
+@media print {
+    .navbar, .btn, .theme-btn, .followup-section {
+        display: none !important;
+    }
+    
+    body {
+        padding-top: 0;
+        background: white;
+        color: black;
+    }
+    
+    .card-pro, .modal-content {
+        box-shadow: none;
+        border: 1px solid #ddd;
+    }
+}

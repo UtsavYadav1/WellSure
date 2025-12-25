@@ -1,0 +1,651 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>About - MediSense</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <style>
+    /* ========== ENHANCED ABOUT PAGE STYLES ========== */
+
+    /* Hero Section */
+    .about-hero {
+      min-height: 60vh;
+      background: linear-gradient(135deg, rgba(13, 27, 42, 0.95) 0%, rgba(27, 38, 59, 0.9) 100%);
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding-top: 100px;
+      padding-bottom: 60px;
+    }
+
+    .about-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(ellipse at 30% 20%, rgba(0, 188, 212, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 70% 80%, rgba(100, 181, 246, 0.1) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .about-hero-title {
+      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 1.5rem;
+    }
+
+    .about-hero-title .highlight {
+      background: linear-gradient(135deg, #00bcd4, #64b5f6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .about-hero-subtitle {
+      font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.8);
+      max-width: 600px;
+      line-height: 1.7;
+    }
+
+    /* Floating Elements */
+    .floating-icon {
+      position: absolute;
+      opacity: 0.1;
+      color: #00bcd4;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .floating-icon:nth-child(1) {
+      top: 20%;
+      left: 10%;
+      font-size: 4rem;
+      animation-delay: 0s;
+    }
+
+    .floating-icon:nth-child(2) {
+      top: 60%;
+      left: 5%;
+      font-size: 3rem;
+      animation-delay: 1s;
+    }
+
+    .floating-icon:nth-child(3) {
+      top: 30%;
+      right: 10%;
+      font-size: 5rem;
+      animation-delay: 0.5s;
+    }
+
+    .floating-icon:nth-child(4) {
+      top: 70%;
+      right: 15%;
+      font-size: 3.5rem;
+      animation-delay: 1.5s;
+    }
+
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translateY(0) rotate(0deg);
+      }
+
+      50% {
+        transform: translateY(-20px) rotate(5deg);
+      }
+    }
+
+    /* Mission Section */
+    .mission-section {
+      padding: 6rem 0;
+      background: var(--bg-main);
+    }
+
+    .mission-card {
+      padding: 3rem;
+      border-radius: 24px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-main);
+      height: 100%;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .mission-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #00bcd4, #64b5f6);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .mission-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .mission-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+    }
+
+    .mission-icon {
+      width: 80px;
+      height: 80px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, rgba(0, 188, 212, 0.15), rgba(0, 188, 212, 0.05));
+      color: #00bcd4;
+    }
+
+    .mission-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 1rem;
+    }
+
+    .mission-text {
+      color: var(--text-muted);
+      line-height: 1.8;
+    }
+
+    /* Technology Section */
+    .tech-section {
+      padding: 6rem 0;
+      background: linear-gradient(180deg, var(--bg-card) 0%, var(--bg-main) 100%);
+    }
+
+    .section-badge {
+      display: inline-block;
+      padding: 0.5rem 1.5rem;
+      background: linear-gradient(135deg, rgba(0, 188, 212, 0.1), rgba(0, 188, 212, 0.05));
+      border: 1px solid rgba(0, 188, 212, 0.2);
+      border-radius: 50px;
+      color: var(--primary);
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 1rem;
+    }
+
+    .tech-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 2rem;
+      padding: 1.5rem;
+      border-radius: 16px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-main);
+      transition: all 0.3s ease;
+    }
+
+    .tech-item:hover {
+      border-color: var(--primary);
+      transform: translateX(10px);
+    }
+
+    .tech-number {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), #0097a7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #fff;
+      margin-right: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .tech-content h5 {
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 0.5rem;
+    }
+
+    .tech-content p {
+      color: var(--text-muted);
+      margin-bottom: 0;
+      font-size: 0.95rem;
+    }
+
+    /* Team Section */
+    .team-section {
+      padding: 6rem 0;
+      background: linear-gradient(135deg, #0d1b2a 0%, #1b263b 100%);
+    }
+
+    .team-card {
+      text-align: center;
+      padding: 2.5rem;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.4s ease;
+    }
+
+    .team-card:hover {
+      transform: translateY(-10px);
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(0, 188, 212, 0.3);
+    }
+
+    .team-avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(0, 188, 212, 0.3), rgba(100, 181, 246, 0.3));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      font-size: 3rem;
+      color: #fff;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .team-avatar-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    .avatar-fallback {
+      display: none;
+      width: 100%;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      color: #fff;
+    }
+
+    .team-card-leader {
+      background: linear-gradient(135deg, rgba(0, 188, 212, 0.15), rgba(255, 255, 255, 0.05));
+      border: 2px solid rgba(0, 188, 212, 0.4);
+      padding: 3rem;
+      position: relative;
+    }
+
+    .team-card-leader .team-avatar {
+      width: 150px;
+      height: 150px;
+      border: 3px solid rgba(0, 188, 212, 0.5);
+      box-shadow: 0 0 30px rgba(0, 188, 212, 0.3);
+    }
+
+    .team-card-leader .team-avatar-photo .avatar-fallback {
+      font-size: 4rem;
+    }
+
+    .team-card-leader .team-name {
+      font-size: 1.6rem;
+    }
+
+    .leader-badge {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, #ffc107, #ff9800);
+      color: #1a1a2e;
+      padding: 0.4rem 1.2rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      box-shadow: 0 4px 15px rgba(255, 193, 7, 0.4);
+    }
+
+    .team-name {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.25rem;
+    }
+
+    .team-role {
+      color: #00bcd4;
+      font-size: 0.9rem;
+      font-weight: 500;
+      margin-bottom: 1rem;
+    }
+
+    .team-bio {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    /* Disclaimer Section */
+    .disclaimer-section {
+      padding: 4rem 0;
+      background: var(--bg-main);
+    }
+
+    .disclaimer-card {
+      background: linear-gradient(135deg, rgba(255, 193, 7, 0.1), rgba(255, 193, 7, 0.05));
+      border: 1px solid rgba(255, 193, 7, 0.3);
+      border-radius: 20px;
+      padding: 2rem;
+    }
+
+    .disclaimer-icon {
+      font-size: 2.5rem;
+      color: #ffc107;
+      margin-bottom: 1rem;
+    }
+
+    /* Footer */
+    .footer-enhanced {
+      background: #0d1b2a;
+      padding: 2rem 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer-enhanced p {
+      color: rgba(255, 255, 255, 0.5);
+      margin: 0;
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center" href="/">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="MediSense"
+          style="height: 42px; width: 42px; object-fit: cover; margin-right: 12px; border-radius: 50%;">
+        <span>MediSense</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+          <li class="nav-item"><a class="nav-link active" href="/about">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="/contact">Contact</a></li>
+        </ul>
+        <div class="d-flex align-items-center">
+          <button class="theme-btn me-3" id="themeToggle" title="Toggle Theme"><i class="fa-solid fa-moon"></i></button>
+          {% if session.name %}
+          <a href="/patient_dashboard" class="btn btn-outline-secondary btn-sm">Dashboard</a>
+          {% else %}
+          <a href="/login" class="btn btn-primary-gradient btn-sm">Login</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="about-hero">
+    <!-- Floating Icons -->
+    <i class="fa-solid fa-brain floating-icon"></i>
+    <i class="fa-solid fa-heart-pulse floating-icon"></i>
+    <i class="fa-solid fa-dna floating-icon"></i>
+    <i class="fa-solid fa-stethoscope floating-icon"></i>
+
+    <div class="container position-relative">
+      <div class="row justify-content-center text-center">
+        <div class="col-lg-8">
+          <h1 class="about-hero-title">
+            Revolutionizing <span class="highlight">Healthcare</span><br>with AI Technology
+          </h1>
+          <p class="about-hero-subtitle mx-auto">
+            Bridging the gap between symptoms and care with advanced artificial intelligence.
+            Experience the future of personalized medical assistance.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mission Section -->
+  <section class="mission-section">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="mission-card">
+            <div class="mission-icon">
+              <i class="fa-solid fa-bullseye"></i>
+            </div>
+            <h4 class="mission-title">Our Mission</h4>
+            <p class="mission-text">To empower individuals with immediate, accurate, and accessible health insights. We
+              believe everyone deserves quick access to quality healthcare guidance.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="mission-card">
+            <div class="mission-icon"
+              style="background: linear-gradient(135deg, rgba(76, 175, 80, 0.15), rgba(76, 175, 80, 0.05)); color: #4caf50;">
+              <i class="fa-solid fa-eye"></i>
+            </div>
+            <h4 class="mission-title">Our Vision</h4>
+            <p class="mission-text">To become the world's most trusted AI-powered healthcare companion, making quality
+              medical guidance accessible to everyone, everywhere.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="mission-card">
+            <div class="mission-icon"
+              style="background: linear-gradient(135deg, rgba(103, 58, 183, 0.15), rgba(103, 58, 183, 0.05)); color: #673ab7;">
+              <i class="fa-solid fa-heart"></i>
+            </div>
+            <h4 class="mission-title">Our Values</h4>
+            <p class="mission-text">Accuracy, accessibility, and empathy drive everything we do. We combine cutting-edge
+              technology with genuine care for patient wellbeing.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Technology Section -->
+  <section class="tech-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-5 mb-4 mb-lg-0">
+          <span class="section-badge"><i class="fa-solid fa-microchip me-2"></i>Technology</span>
+          <h2 class="section-title">How MediSense Works</h2>
+          <p class="text-muted mb-4">Our platform leverages state-of-the-art Natural Language Processing and Machine
+            Learning to provide accurate disease predictions and personalized health recommendations.</p>
+          <a href="/#predict-section" class="btn btn-primary-gradient">Try It Now <i
+              class="fa-solid fa-arrow-right ms-2"></i></a>
+        </div>
+        <div class="col-lg-7">
+          <div class="tech-item">
+            <div class="tech-number">1</div>
+            <div class="tech-content">
+              <h5>Natural Language Input</h5>
+              <p>Describe your symptoms in plain English. Our AI understands context and medical terminology alike.</p>
+            </div>
+          </div>
+          <div class="tech-item">
+            <div class="tech-number">2</div>
+            <div class="tech-content">
+              <h5>AI-Powered Analysis</h5>
+              <p>Our DistilBERT-based model processes your input using advanced NLP to identify potential conditions.
+              </p>
+            </div>
+          </div>
+          <div class="tech-item">
+            <div class="tech-number">3</div>
+            <div class="tech-content">
+              <h5>Instant Recommendations</h5>
+              <p>Receive personalized suggestions on medications, diet, precautions, and relevant specialists.</p>
+            </div>
+          </div>
+          <div class="tech-item">
+            <div class="tech-number">4</div>
+            <div class="tech-content">
+              <h5>Doctor Connection</h5>
+              <p>Book appointments with verified specialists based on your diagnosis, all within the platform.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team Section -->
+  <section class="team-section">
+    <div class="container">
+      <div class="text-center mb-5">
+        <span class="section-badge" style="border-color: rgba(255,255,255,0.2);"><i
+            class="fa-solid fa-users me-2"></i>Our Team</span>
+        <h2 class="section-title text-white">Meet the Innovators</h2>
+        <p class="text-white-50">Passionate developers and healthcare enthusiasts building the future of telemedicine.
+        </p>
+      </div>
+
+      <!-- Founder - Utsav Yadav -->
+      <div class="row justify-content-center mb-5">
+        <div class="col-md-8 col-lg-5">
+          <div class="team-card team-card-leader">
+            <div class="team-avatar team-avatar-photo">
+              <img src="{{ url_for('static', filename='images/team/utsav.jpg') }}" alt="Utsav Yadav"
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+              <div class="avatar-fallback"><i class="fa-solid fa-user"></i></div>
+            </div>
+            <h5 class="team-name">Utsav Yadav</h5>
+            <p class="team-role"><i class="fa-solid fa-rocket me-1"></i> Founder & AI Lead</p>
+            <p class="team-bio">Visionary founder driving MediSense's mission. Expert in NLP and deep
+              learning, building intelligent healthcare solutions for everyone.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ML Specialists & Full Stack Developers -->
+      <div class="row g-4 justify-content-center mb-4">
+        <!-- Divya Sharma - ML Specialist -->
+        <div class="col-md-6 col-lg-3">
+          <div class="team-card">
+            <div class="team-avatar team-avatar-photo">
+              <img src="{{ url_for('static', filename='images/team/divya.jpg') }}" alt="Divya Sharma"
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+              <div class="avatar-fallback"><i class="fa-solid fa-user"></i></div>
+            </div>
+            <h5 class="team-name">Divya Sharma</h5>
+            <p class="team-role"><i class="fa-solid fa-brain me-1"></i> ML Specialist</p>
+            <p class="team-bio">Expert in machine learning and neural networks, optimizing disease prediction
+              algorithms.</p>
+          </div>
+        </div>
+
+        <!-- Shashwat Pandey - Full Stack -->
+        <div class="col-md-6 col-lg-3">
+          <div class="team-card">
+            <div class="team-avatar team-avatar-photo">
+              <img src="{{ url_for('static', filename='images/team/shashwat.jpg') }}" alt="Shashwat Pandey"
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+              <div class="avatar-fallback"><i class="fa-solid fa-code"></i></div>
+            </div>
+            <h5 class="team-name">Shashwat Pandey</h5>
+            <p class="team-role"><i class="fa-solid fa-laptop-code me-1"></i> Full Stack Developer</p>
+            <p class="team-bio">Building robust and scalable web applications. Expert in frontend and backend
+              technologies.</p>
+          </div>
+        </div>
+
+        <!-- Ayush Mishra - Full Stack -->
+        <div class="col-md-6 col-lg-3">
+          <div class="team-card">
+            <div class="team-avatar team-avatar-photo">
+              <img src="{{ url_for('static', filename='images/team/ayush.jpeg') }}" alt="Ayush Mishra"
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+              <div class="avatar-fallback"><i class="fa-solid fa-code"></i></div>
+            </div>
+            <h5 class="team-name">Ayush Mishra</h5>
+            <p class="team-role"><i class="fa-solid fa-laptop-code me-1"></i> Full Stack Developer</p>
+            <p class="team-bio">Crafting seamless user experiences and powerful APIs. Passionate about clean code and
+              performance.</p>
+          </div>
+        </div>
+
+        <!-- Dr. Suresh Gupta - Medical Advisor -->
+        <div class="col-md-6 col-lg-3">
+          <div class="team-card">
+            <div class="team-avatar team-avatar-photo">
+              <img src="{{ url_for('static', filename='images/team/dr_suresh.jpg') }}" alt="Dr. Suresh Gupta"
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+              <div class="avatar-fallback"><i class="fa-solid fa-user-doctor"></i></div>
+            </div>
+            <h5 class="team-name">Dr. Suresh Gupta</h5>
+            <p class="team-role"><i class="fa-solid fa-stethoscope me-1"></i> Medical Advisor</p>
+            <p class="team-bio">Licensed physician ensuring medical accuracy and aligning recommendations with
+              healthcare standards.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Disclaimer Section -->
+  <section class="disclaimer-section">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="disclaimer-card text-center">
+            <div class="disclaimer-icon">
+              <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <h4 class="mb-3" style="color: var(--text-main);">Medical Disclaimer</h4>
+            <p class="mb-0" style="color: var(--text-muted);">
+              MediSense is an assistive tool for educational and informational purposes only.
+              It does not replace professional medical diagnosis, advice, or treatment.
+              Always consult a certified healthcare professional for serious health concerns.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer-enhanced text-center">
+    <div class="container">
+      <p>&copy; 2025 MediSense. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="{{ url_for('static', filename='js/theme.js') }}"></script>
+</body>
+
+</html>

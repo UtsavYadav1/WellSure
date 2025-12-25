@@ -1,0 +1,509 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contact - MediSense</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <style>
+    /* ========== ENHANCED CONTACT PAGE STYLES ========== */
+
+    /* Hero Section */
+    .contact-hero {
+      min-height: 50vh;
+      background: linear-gradient(135deg, rgba(13, 27, 42, 0.95) 0%, rgba(27, 38, 59, 0.9) 100%);
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding-top: 100px;
+      padding-bottom: 60px;
+    }
+
+    .contact-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(ellipse at 50% 50%, rgba(0, 188, 212, 0.15) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .contact-hero-title {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 1rem;
+    }
+
+    .contact-hero-title .highlight {
+      background: linear-gradient(135deg, #00bcd4, #64b5f6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .contact-hero-subtitle {
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.8);
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    /* Contact Section */
+    .contact-section {
+      padding: 5rem 0;
+      background: var(--bg-main);
+      margin-top: -80px;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Contact Info Cards */
+    .contact-info-card {
+      padding: 2rem;
+      border-radius: 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-main);
+      text-align: center;
+      transition: all 0.4s ease;
+      height: 100%;
+    }
+
+    .contact-info-card:hover {
+      transform: translateY(-10px);
+      border-color: var(--primary);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .contact-icon-box {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      margin: 0 auto 1.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .contact-info-card:hover .contact-icon-box {
+      transform: scale(1.1);
+    }
+
+    .contact-icon-box.email {
+      background: linear-gradient(135deg, rgba(0, 188, 212, 0.15), rgba(0, 188, 212, 0.05));
+      color: #00bcd4;
+    }
+
+    .contact-icon-box.location {
+      background: linear-gradient(135deg, rgba(76, 175, 80, 0.15), rgba(76, 175, 80, 0.05));
+      color: #4caf50;
+    }
+
+    .contact-icon-box.phone {
+      background: linear-gradient(135deg, rgba(103, 58, 183, 0.15), rgba(103, 58, 183, 0.05));
+      color: #673ab7;
+    }
+
+    .contact-icon-box.hours {
+      background: linear-gradient(135deg, rgba(255, 152, 0, 0.15), rgba(255, 152, 0, 0.05));
+      color: #ff9800;
+    }
+
+    .contact-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 0.5rem;
+    }
+
+    .contact-text {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 0;
+    }
+
+    /* Form Section */
+    .form-section {
+      padding: 5rem 0;
+      background: linear-gradient(180deg, var(--bg-main) 0%, var(--bg-card) 100%);
+    }
+
+    .form-card {
+      padding: 3rem;
+      border-radius: 24px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-main);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    .section-badge {
+      display: inline-block;
+      padding: 0.5rem 1.5rem;
+      background: linear-gradient(135deg, rgba(0, 188, 212, 0.1), rgba(0, 188, 212, 0.05));
+      border: 1px solid rgba(0, 188, 212, 0.2);
+      border-radius: 50px;
+      color: var(--primary);
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 0.5rem;
+    }
+
+    .form-label-custom {
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .form-control-custom {
+      padding: 1rem 1.25rem;
+      border-radius: 12px;
+      border: 1px solid var(--border-main);
+      background: var(--bg-main);
+      color: var(--text-main);
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .form-control-custom:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(0, 188, 212, 0.15);
+      outline: none;
+    }
+
+    .form-control-custom::placeholder {
+      color: var(--text-muted);
+      opacity: 0.7;
+    }
+
+    .btn-submit {
+      padding: 1rem 2.5rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #00bcd4, #0097a7);
+      border: none;
+      color: #fff;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 30px rgba(0, 188, 212, 0.3);
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(0, 188, 212, 0.4);
+    }
+
+    /* Map/Info Section */
+    .info-section {
+      padding: 4rem 0;
+      background: linear-gradient(135deg, #0d1b2a 0%, #1b263b 100%);
+    }
+
+    .social-links {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 2rem;
+    }
+
+    .social-link {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .social-link:hover {
+      background: var(--primary);
+      transform: translateY(-5px);
+      color: #fff;
+    }
+
+    /* FAQ Section */
+    .faq-section {
+      padding: 5rem 0;
+      background: var(--bg-main);
+    }
+
+    .faq-item {
+      padding: 1.5rem;
+      border-radius: 16px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-main);
+      margin-bottom: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .faq-item:hover {
+      border-color: var(--primary);
+    }
+
+    .faq-question {
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+    }
+
+    .faq-question i {
+      color: var(--primary);
+      margin-right: 0.75rem;
+    }
+
+    .faq-answer {
+      color: var(--text-muted);
+      padding-left: 2rem;
+      margin-bottom: 0;
+      line-height: 1.7;
+    }
+
+    /* Footer */
+    .footer-enhanced {
+      background: #0d1b2a;
+      padding: 2rem 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer-enhanced p {
+      color: rgba(255, 255, 255, 0.5);
+      margin: 0;
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center" href="/">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="MediSense"
+          style="height: 42px; width: 42px; object-fit: cover; margin-right: 12px; border-radius: 50%;">
+        <span>MediSense</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="/about">About</a></li>
+          <li class="nav-item"><a class="nav-link active" href="/contact">Contact</a></li>
+        </ul>
+        <div class="d-flex align-items-center">
+          <button class="theme-btn me-3" id="themeToggle" title="Toggle Theme"><i class="fa-solid fa-moon"></i></button>
+          {% if session.name %}
+          <a href="/patient_dashboard" class="btn btn-outline-secondary btn-sm">Dashboard</a>
+          {% else %}
+          <a href="/login" class="btn btn-primary-gradient btn-sm">Login</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="contact-hero text-center">
+    <div class="container position-relative">
+      <h1 class="contact-hero-title">
+        Get in <span class="highlight">Touch</span>
+      </h1>
+      <p class="contact-hero-subtitle">
+        Have questions about MediSense? We're here to help you 24/7.
+      </p>
+    </div>
+  </section>
+
+  <!-- Contact Info Cards -->
+  <section class="contact-section">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-md-6 col-lg-3">
+          <div class="contact-info-card">
+            <div class="contact-icon-box email">
+              <i class="fa-solid fa-envelope"></i>
+            </div>
+            <h5 class="contact-title">Email Us</h5>
+            <p class="contact-text">support@MediSense.ai</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="contact-info-card">
+            <div class="contact-icon-box phone">
+              <i class="fa-solid fa-phone"></i>
+            </div>
+            <h5 class="contact-title">Call Us</h5>
+            <p class="contact-text">+91 98765 43210</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="contact-info-card">
+            <div class="contact-icon-box location">
+              <i class="fa-solid fa-location-dot"></i>
+            </div>
+            <h5 class="contact-title">Visit Us</h5>
+            <p class="contact-text">KIET Group of Institutions, Ghaziabad</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="contact-info-card">
+            <div class="contact-icon-box hours">
+              <i class="fa-solid fa-clock"></i>
+            </div>
+            <h5 class="contact-title">Working Hours</h5>
+            <p class="contact-text">Mon - Sat: 9AM - 6PM</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Form Section -->
+  <section class="form-section">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="form-card">
+            <div class="text-center mb-4">
+              <span class="section-badge"><i class="fa-solid fa-paper-plane me-2"></i>Message Us</span>
+              <h2 class="section-title">Send a Message</h2>
+              <p class="text-muted">Fill out the form below and we'll get back to you within 24 hours.</p>
+            </div>
+
+            <form>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label-custom">Your Name</label>
+                  <input type="text" class="form-control form-control-custom" placeholder="John Doe">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label-custom">Email Address</label>
+                  <input type="email" class="form-control form-control-custom" placeholder="name@example.com">
+                </div>
+                <div class="col-12">
+                  <label class="form-label-custom">Subject</label>
+                  <input type="text" class="form-control form-control-custom" placeholder="How can we help you?">
+                </div>
+                <div class="col-12">
+                  <label class="form-label-custom">Message</label>
+                  <textarea class="form-control form-control-custom" rows="5"
+                    placeholder="Write your message here..."></textarea>
+                </div>
+                <div class="col-12 text-center mt-4">
+                  <button type="submit" class="btn btn-submit">
+                    <i class="fa-solid fa-paper-plane me-2"></i>Send Message
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Social & Connect Section -->
+  <section class="info-section text-center">
+    <div class="container">
+      <h3 class="text-white mb-2">Connect With Us</h3>
+      <p class="text-white-50 mb-4">Follow us on social media for updates and health tips</p>
+      <div class="social-links">
+        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="faq-section">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="text-center mb-5">
+            <span class="section-badge"><i class="fa-solid fa-circle-question me-2"></i>FAQ</span>
+            <h2 class="section-title">Frequently Asked Questions</h2>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">
+              <i class="fa-solid fa-chevron-right"></i>
+              Is MediSense free to use?
+            </div>
+            <p class="faq-answer">Yes! Our symptom analysis and disease prediction features are completely free. You
+              only pay when you book an appointment with a doctor.</p>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">
+              <i class="fa-solid fa-chevron-right"></i>
+              How accurate are the AI predictions?
+            </div>
+            <p class="faq-answer">Our AI model is trained on extensive medical data and continuously improved. However,
+              it's designed as an assistive tool - always consult a professional for final diagnosis.</p>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">
+              <i class="fa-solid fa-chevron-right"></i>
+              Is my medical data secure?
+            </div>
+            <p class="faq-answer">Absolutely. We use industry-standard encryption and follow strict data privacy
+              protocols. Your health information is never shared with third parties.</p>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">
+              <i class="fa-solid fa-chevron-right"></i>
+              Can I book appointments through the platform?
+            </div>
+            <p class="faq-answer">Yes! After getting your AI diagnosis, you can directly book appointments with relevant
+              specialists through our integrated booking system.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer-enhanced text-center">
+    <div class="container">
+      <p>&copy; 2025 MediSense. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="{{ url_for('static', filename='js/theme.js') }}"></script>
+</body>
+
+</html>

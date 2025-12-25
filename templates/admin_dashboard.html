@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin Dashboard - MediSense</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- Standard Admin Navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="MediSense"
+                    style="height: 42px; width: 42px; object-fit: cover; margin-right: 12px; border-radius: 50%;">
+                <span>MediSense</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link text-primary" href="/admin_dashboard">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/about">About</a></li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <button class="theme-btn me-3" id="themeToggle" title="Toggle Theme"><i
+                            class="fa-solid fa-moon"></i></button>
+                    <div class="dropdown">
+                        <button class="btn btn-outline-secondary dropdown-toggle" type="button"
+                            data-bs-toggle="dropdown">
+                            Admin
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end"
+                            style="background: var(--bg-card); border-color: var(--border-color);">
+                            <li><a class="dropdown-item text-danger" href="/logout">Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5 pt-4">
+        <!-- Stats Row -->
+        <div class="row g-4 mb-5">
+            <div class="col-md-3">
+                <div class="card-pro text-center p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <div class="text-start">
+                            <p class="text-secondary small text-uppercase mb-1 fw-bold">Total Patients</p>
+                            <h3 class="fw-bold mb-0 text-main">{{ stats.patients }}</h3>
+                        </div>
+                        <div class="bg-primary bg-opacity-10 p-3 rounded-circle text-primary">
+                            <i class="fa-solid fa-users fa-xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card-pro text-center p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <div class="text-start">
+                            <p class="text-secondary small text-uppercase mb-1 fw-bold">Total Doctors</p>
+                            <h3 class="fw-bold mb-0 text-main">{{ stats.doctors }}</h3>
+                        </div>
+                        <div class="bg-info bg-opacity-10 p-3 rounded-circle text-info">
+                            <i class="fa-solid fa-user-doctor fa-xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card-pro p-4 h-100 d-flex align-items-center justify-content-between">
+                    <div>
+                        <h5 class="mb-1 text-main">System Status</h5>
+                        <p class="text-success small mb-0"><i class="fa-solid fa-circle-check me-1"></i> All Services
+                            Operational</p>
+                    </div>
+                    <button class="btn btn-outline-secondary" onclick="location.reload()">Refresh Data</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <!-- Add Doctor -->
+            <div class="col-lg-4">
+                <div class="glass-container h-100">
+                    <h5 class="mb-4 text-main"><i class="fa-solid fa-user-plus me-2 text-success"></i>Add New Doctor
+                    </h5>
+
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                    {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} small py-2">{{ message }}</div>
+                    {% endfor %}
+                    {% endif %}
+                    {% endwith %}
+
+                    <form action="/add_doctor" method="post">
+                        <div class="mb-3">
+                            <label class="form-label small">Doctor Name</label>
+                            <input type="text" name="name" class="form-control" required placeholder="Dr. Name">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small">Email Address</label>
+                            <input type="email" name="email" class="form-control" required
+                                placeholder="email@hospital.com">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small">Initial Password</label>
+                            <input type="password" name="password" class="form-control" required
+                                placeholder="Minimum 6 chars">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small">Specialization</label>
+                            <select class="form-select" name="speciality" required>
+                                {% for spec in specializations %}
+                                <option value="{{ spec }}">{{ spec }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <!-- Location Fields -->
+                        <div class="mb-3">
+                            <label class="form-label small">City</label>
+                            <input type="text" name="city" class="form-control" required placeholder="City">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small">Address</label>
+                            <textarea name="address" class="form-control" rows="2" required
+                                placeholder="Clinic Address"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small">Pincode</label>
+                            <input type="text" name="pincode" class="form-control" required placeholder="ZIP Code">
+                        </div>
+
+                        <div class="alert alert-info small mt-3 border-0 bg-opacity-10 text-info">
+                            <i class="fa-solid fa-circle-info me-1"></i> A default profile will be created. The doctor
+                            can update details upon first login.
+                        </div>
+
+                        <button type="submit" class="btn btn-primary-gradient w-100 mt-2">Create Account</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Activity Logs / Recent Actions -->
+            <div class="col-lg-8">
+                <div class="card-pro h-100">
+                    <h5 class="mb-4 text-main">Recent System Activities</h5>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead>
+                                <tr>
+                                    <th>Timestamp</th>
+                                    <th>User</th>
+                                    <th>Action</th>
+                                    <th>Details</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for activity in activities %}
+                                <tr>
+                                    <td class="text-secondary small text-nowrap">{{ activity.created_at }}</td>
+                                    <td class="fw-medium text-main">{{ activity.user_name }}</td>
+                                    <td>
+                                        <span
+                                            class="badge bg-secondary bg-opacity-10 text-secondary border border-secondary border-opacity-25 rounded-pill px-2">
+                                            {{ activity.action }}
+                                        </span>
+                                    </td>
+                                    <td class="text-muted small">{{ activity.details }}</td>
+                                </tr>
+                                {% else %}
+                                <tr>
+                                    <td colspan="4" class="text-center text-muted py-4">No recent activities found.</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Manage Doctors Section -->
+        <div class="card-pro mt-4 mb-5">
+            <h5 class="mb-4 text-main">Registered Doctors Directory</h5>
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Doctor Name</th>
+                            <th>Specialization</th>
+                            <th>Email</th>
+                            <th>Location</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for doc in doctors %}
+                        <tr>
+                            <td class="text-muted">#{{ doc.id }}</td>
+                            <td class="fw-bold text-main">{{ doc.name }}</td>
+                            <td><span class="badge-pro badge-info">{{ doc.speciality }}</span></td>
+                            <td class="text-secondary">{{ doc.email }}</td>
+                            <td class="text-secondary">{{ doc.city }}</td>
+                            <td>
+                                <button class="btn btn-sm btn-outline-primary me-1" data-bs-toggle="modal"
+                                    data-bs-target="#editDoctorModal" data-id="{{ doc.id }}" data-name="{{ doc.name }}"
+                                    data-email="{{ doc.email }}" data-spec="{{ doc.speciality }}"
+                                    data-fees="{{ doc.fees }}" data-city="{{ doc.city }}"
+                                    data-address="{{ doc.address }}" data-pincode="{{ doc.pincode }}">
+                                    <i class="fa-solid fa-pen"></i>
+                                </button>
+                                <form action="/delete_doctor/{{ doc.id }}" method="post" class="d-inline"
+                                    onsubmit="return confirm('Are you sure you want to delete Dr. {{ doc.name }}?');">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger"><i
+                                            class="fa-solid fa-trash"></i></button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Edit Doctor Modal -->
+    <div class="modal fade" id="editDoctorModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content glass-container border-0">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title text-main">Edit Doctor Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="/update_doctor" method="post" id="editDoctorForm">
+                        <input type="hidden" name="doctor_id" id="edit_id">
+
+                        <div class="mb-3">
+                            <label class="form-label small">Doctor Name</label>
+                            <input type="text" name="name" id="edit_name" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small">Email Address</label>
+                            <input type="email" name="email" id="edit_email" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small">Specialization</label>
+                            <select class="form-select" name="specialization" id="edit_spec" required>
+                                {% for spec in specializations %}
+                                <option value="{{ spec }}">{{ spec }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small">Consultation Fees (₹)</label>
+                            <input type="number" name="fees" id="edit_fees" class="form-control" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label small">City</label>
+                            <input type="text" name="city" id="edit_city" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small">Address</label>
+                            <textarea name="address" id="edit_address" class="form-control" rows="2"
+                                required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small">Pincode</label>
+                            <input type="text" name="pincode" id="edit_pincode" class="form-control" required>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary-gradient w-100">Save Changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/theme.js') }}"></script>
+    <script>
+        const editModal = document.getElementById('editDoctorModal')
+        editModal.addEventListener('show.bs.modal', event => {
+            const button = event.relatedTarget
+
+            // Extract info from data-* attributes
+            document.getElementById('edit_id').value = button.getAttribute('data-id')
+            document.getElementById('edit_name').value = button.getAttribute('data-name')
+            document.getElementById('edit_email').value = button.getAttribute('data-email')
+            document.getElementById('edit_spec').value = button.getAttribute('data-spec')
+            document.getElementById('edit_fees').value = button.getAttribute('data-fees') || 0
+            document.getElementById('edit_city').value = button.getAttribute('data-city')
+            document.getElementById('edit_address').value = button.getAttribute('data-address')
+            document.getElementById('edit_pincode').value = button.getAttribute('data-pincode')
+        })
+    </script>
+</body>
+
+</html>

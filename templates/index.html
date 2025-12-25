@@ -1,0 +1,1155 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MediSense - Intelligent Telemedicine</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        /* ========== ENHANCED HOME PAGE STYLES ========== */
+
+        /* Hero Section with Background */
+        .hero-enhanced {
+            min-height: 100vh;
+            background: linear-gradient(135deg, rgba(13, 27, 42, 0.95) 0%, rgba(27, 38, 59, 0.9) 100%),
+            url("{{ url_for('static', filename='images/hero_bg.png') }}") center/cover no-repeat;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: 80px;
+        }
+
+        .hero-enhanced::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at 30% 20%, rgba(0, 188, 212, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 80%, rgba(100, 181, 246, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-title-enhanced {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            color: #fff;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-title-enhanced .highlight {
+            background: linear-gradient(135deg, #00bcd4, #64b5f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle-enhanced {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 600px;
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-glow {
+            position: relative;
+            padding: 1rem 2.5rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .btn-glow::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            transform: scale(0);
+            transition: transform 0.5s ease;
+        }
+
+        .btn-glow:hover::before {
+            transform: scale(1);
+        }
+
+        .btn-primary-glow {
+            background: linear-gradient(135deg, #00bcd4, #0097a7);
+            border: none;
+            color: #fff;
+            box-shadow: 0 10px 40px rgba(0, 188, 212, 0.3);
+        }
+
+        .btn-primary-glow:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 50px rgba(0, 188, 212, 0.4);
+        }
+
+        .btn-outline-light-glow {
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: #fff;
+            background: transparent;
+        }
+
+        .btn-outline-light-glow:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.5);
+            color: #fff;
+        }
+
+        /* Hero Image/Illustration */
+        .hero-visual {
+            position: relative;
+        }
+
+        .hero-visual img {
+            max-width: 100%;
+            filter: drop-shadow(0 20px 60px rgba(0, 188, 212, 0.3));
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        /* Animated Particles */
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(0, 188, 212, 0.5);
+            border-radius: 50%;
+            animation: rise 8s infinite;
+        }
+
+        @keyframes rise {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-100px) scale(1);
+                opacity: 0;
+            }
+        }
+
+        /* ========== STATS SECTION ========== */
+        .stats-section {
+            background: linear-gradient(180deg, #0d1b2a 0%, #1b263b 100%);
+            padding: 5rem 0;
+            margin-top: -1px;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 2rem;
+            border-radius: 20px;
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #00bcd4, #64b5f6);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 188, 212, 0.2);
+            border-color: rgba(0, 188, 212, 0.3);
+        }
+
+        .stat-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, rgba(0, 188, 212, 0.2), rgba(0, 188, 212, 0.1));
+            color: #00bcd4;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #fff, #64b5f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 500;
+        }
+
+        /* ========== FEATURES SECTION ========== */
+        .features-section {
+            padding: 6rem 0;
+            background: var(--bg-main);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: linear-gradient(135deg, rgba(0, 188, 212, 0.1), rgba(0, 188, 212, 0.05));
+            border: 1px solid rgba(0, 188, 212, 0.2);
+            border-radius: 50px;
+            color: var(--primary);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .feature-card-enhanced {
+            padding: 2.5rem;
+            border-radius: 24px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-main);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card-enhanced::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(0, 188, 212, 0.05), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .feature-card-enhanced:hover::before {
+            opacity: 1;
+        }
+
+        .feature-card-enhanced:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            border-color: var(--primary);
+        }
+
+        .feature-icon-box {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .feature-icon-box.ai {
+            background: linear-gradient(135deg, rgba(0, 188, 212, 0.15), rgba(0, 188, 212, 0.05));
+            color: #00bcd4;
+        }
+
+        .feature-icon-box.doctor {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.15), rgba(76, 175, 80, 0.05));
+            color: #4caf50;
+        }
+
+        .feature-icon-box.record {
+            background: linear-gradient(135deg, rgba(255, 152, 0, 0.15), rgba(255, 152, 0, 0.05));
+            color: #ff9800;
+        }
+
+        .feature-icon-box.security {
+            background: linear-gradient(135deg, rgba(103, 58, 183, 0.15), rgba(103, 58, 183, 0.05));
+            color: #673ab7;
+        }
+
+        .feature-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .feature-description {
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ========== HOW IT WORKS SECTION ========== */
+        .how-it-works-section {
+            padding: 6rem 0;
+            background: linear-gradient(180deg, var(--bg-main) 0%, var(--bg-card) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .step-card {
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .step-number-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), #0097a7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+            font-weight: 800;
+            color: #fff;
+            box-shadow: 0 10px 30px rgba(0, 188, 212, 0.3);
+            position: relative;
+            z-index: 2;
+        }
+
+        .step-connector {
+            position: absolute;
+            top: 40px;
+            left: 60%;
+            width: 80%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), rgba(0, 188, 212, 0.2));
+            z-index: 1;
+        }
+
+        .step-connector::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: -4px;
+            width: 10px;
+            height: 10px;
+            background: var(--primary);
+            border-radius: 50%;
+        }
+
+        .step-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 0.75rem;
+        }
+
+        .step-description {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* ========== PREDICTION SECTION ========== */
+        .predict-section {
+            padding: 6rem 0;
+            background: linear-gradient(135deg, #0d1b2a 0%, #1b263b 100%);
+            position: relative;
+        }
+
+        .predict-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at center, rgba(0, 188, 212, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .predict-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 3rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            z-index: 1;
+        }
+
+        .predict-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+
+        .predict-subtitle {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 2rem;
+        }
+
+        .predict-input {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 1.2rem 1.5rem;
+            color: #fff;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .predict-input:focus {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(0, 188, 212, 0.2);
+            outline: none;
+        }
+
+        .predict-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .voice-btn-enhanced {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 188, 212, 0.2);
+            border: none;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #00bcd4;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .voice-btn-enhanced:hover {
+            background: rgba(0, 188, 212, 0.3);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .btn-predict {
+            background: linear-gradient(135deg, #00bcd4, #0097a7);
+            border: none;
+            border-radius: 15px;
+            padding: 1.2rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #fff;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 188, 212, 0.3);
+        }
+
+        .btn-predict:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 188, 212, 0.4);
+        }
+
+        /* ========== FOOTER ========== */
+        .footer-enhanced {
+            background: #0d1b2a;
+            padding: 3rem 0 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 1rem;
+        }
+
+        .footer-brand i {
+            color: var(--primary);
+            margin-right: 0.5rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            margin-right: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .footer-bottom p {
+            color: rgba(255, 255, 255, 0.5);
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        /* Counter Animation */
+        .counter {
+            display: inline-block;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 991px) {
+            .step-connector {
+                display: none;
+            }
+
+            .hero-visual {
+                margin-top: 3rem;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .hero-title-enhanced {
+                font-size: 2rem;
+            }
+
+            .stat-card {
+                margin-bottom: 1rem;
+            }
+
+            .predict-card {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="MediSense"
+                    style="height: 42px; width: 42px; object-fit: cover; margin-right: 12px; border-radius: 50%;">
+                <span>MediSense</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link active" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/contact">Contact</a></li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <button class="theme-btn me-3" id="themeToggle" title="Toggle Theme"><i
+                            class="fa-solid fa-moon"></i></button>
+                    {% if session.name %}
+                    {% if session.role == 'Doctor' %}
+                    <a href="/doctor_dashboard" class="btn btn-outline-secondary btn-sm">Dr. Dashboard</a>
+                    {% elif session.role == 'Admin' %}
+                    <a href="/admin_dashboard" class="btn btn-outline-secondary btn-sm">Admin Panel</a>
+                    {% else %}
+                    <a href="/patient_dashboard" class="btn btn-outline-secondary btn-sm">Dashboard</a>
+                    {% endif %}
+                    {% else %}
+                    <a href="/login" class="btn btn-primary-gradient btn-sm">Login / Signup</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Enhanced Hero Section -->
+    <section class="hero-enhanced">
+        <!-- Animated Particles -->
+        <div class="particles">
+            <div class="particle" style="left: 10%; animation-delay: 0s;"></div>
+            <div class="particle" style="left: 20%; animation-delay: 1s;"></div>
+            <div class="particle" style="left: 30%; animation-delay: 2s;"></div>
+            <div class="particle" style="left: 40%; animation-delay: 0.5s;"></div>
+            <div class="particle" style="left: 50%; animation-delay: 1.5s;"></div>
+            <div class="particle" style="left: 60%; animation-delay: 2.5s;"></div>
+            <div class="particle" style="left: 70%; animation-delay: 0.3s;"></div>
+            <div class="particle" style="left: 80%; animation-delay: 1.8s;"></div>
+            <div class="particle" style="left: 90%; animation-delay: 2.2s;"></div>
+        </div>
+
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-7 hero-content">
+                    <h1 class="hero-title-enhanced">
+                        Healthcare Reimagined with<br>
+                        <span class="highlight">Artificial Intelligence</span>
+                    </h1>
+                    <p class="hero-subtitle-enhanced">
+                        Experience the future of healthcare. Our AI-powered platform analyzes your symptoms instantly,
+                        connects you with expert specialists, and provides personalized medical recommendations.
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="#predict-section" class="btn btn-glow btn-primary-glow">
+                            <i class="fa-solid fa-stethoscope me-2"></i>Start Diagnosis
+                        </a>
+                        <a href="#how-it-works" class="btn btn-glow btn-outline-light-glow">
+                            <i class="fa-solid fa-play me-2"></i>See How It Works
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-5 hero-visual d-none d-lg-block">
+                    <img src="{{ url_for('static', filename='images/hero_bg.png') }}" alt="AI Healthcare"
+                        class="img-fluid">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-6 col-lg-3">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fa-solid fa-users"></i>
+                        </div>
+                        <div class="stat-number counter" data-target="{{ stats.users if stats else 0 }}">{{ stats.users
+                            if stats else 0 }}+</div>
+                        <div class="stat-label">Active Users</div>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fa-solid fa-user-doctor"></i>
+                        </div>
+                        <div class="stat-number counter" data-target="{{ stats.doctors if stats else 0 }}">{{
+                            stats.doctors if stats else 0 }}+</div>
+                        <div class="stat-label">Expert Doctors</div>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fa-solid fa-microscope"></i>
+                        </div>
+                        <div class="stat-number counter" data-target="{{ stats.diagnoses if stats else 0 }}">{{
+                            stats.diagnoses if stats else 0 }}+</div>
+                        <div class="stat-label">AI Diagnoses</div>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fa-solid fa-calendar-check"></i>
+                        </div>
+                        <div class="stat-number counter" data-target="{{ stats.appointments if stats else 0 }}">{{
+                            stats.appointments if stats else 0 }}+</div>
+                        <div class="stat-label">Appointments</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge"><i class="fa-solid fa-sparkles me-2"></i>Features</span>
+                <h2 class="section-title">Why Choose MediSense?</h2>
+                <p class="section-subtitle">Experience cutting-edge healthcare technology designed to make your medical
+                    journey seamless and efficient.</p>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3">
+                    <div class="feature-card-enhanced">
+                        <div class="feature-icon-box ai">
+                            <i class="fa-solid fa-brain"></i>
+                        </div>
+                        <h4 class="feature-title">AI-Powered Analysis</h4>
+                        <p class="feature-description">Advanced machine learning algorithms analyze your symptoms with
+                            high accuracy, providing instant disease predictions.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="feature-card-enhanced">
+                        <div class="feature-icon-box doctor">
+                            <i class="fa-solid fa-user-doctor"></i>
+                        </div>
+                        <h4 class="feature-title">Expert Specialists</h4>
+                        <p class="feature-description">Connect with verified healthcare professionals. Book appointments
+                            instantly based on your diagnosis needs.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="feature-card-enhanced">
+                        <div class="feature-icon-box record">
+                            <i class="fa-solid fa-file-medical"></i>
+                        </div>
+                        <h4 class="feature-title">Digital Health Records</h4>
+                        <p class="feature-description">Securely store and access your medical history, prescriptions,
+                            and AI-generated reports anytime.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="feature-card-enhanced">
+                        <div class="feature-icon-box security">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
+                        <h4 class="feature-title">Privacy & Security</h4>
+                        <p class="feature-description">Your health data is encrypted and protected with
+                            industry-standard security protocols.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works-section" id="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge"><i class="fa-solid fa-route me-2"></i>Process</span>
+                <h2 class="section-title">How It Works</h2>
+                <p class="section-subtitle">Get your AI-powered diagnosis in just 4 simple steps</p>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 col-lg-3">
+                    <div class="step-card">
+                        <div class="step-connector d-none d-lg-block"></div>
+                        <div class="step-number-circle">1</div>
+                        <h5 class="step-title">Describe Symptoms</h5>
+                        <p class="step-description">Type or use voice input to describe what you're experiencing in
+                            natural language.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="step-card">
+                        <div class="step-connector d-none d-lg-block"></div>
+                        <div class="step-number-circle">2</div>
+                        <h5 class="step-title">AI Analysis</h5>
+                        <p class="step-description">Our advanced AI processes your symptoms and predicts potential
+                            conditions instantly.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="step-card">
+                        <div class="step-connector d-none d-lg-block"></div>
+                        <div class="step-number-circle">3</div>
+                        <h5 class="step-title">Get Recommendations</h5>
+                        <p class="step-description">Receive personalized medications, precautions, diet plans, and
+                            specialist suggestions.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="step-card">
+                        <div class="step-number-circle">4</div>
+                        <h5 class="step-title">Book & Recover</h5>
+                        <p class="step-description">Schedule an appointment with a specialist and track your health
+                            journey to recovery.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Prediction Section (Core Logic) -->
+    <section id="predict-section" class="predict-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="predict-card text-center">
+                        <h3 class="predict-title"><i class="fa-solid fa-stethoscope me-2"></i>Analyze Your Symptoms</h3>
+                        <p class="predict-subtitle">Describe what you're feeling and let our AI provide instant insights
+                        </p>
+                        <form action="/predict" method="post">
+                            <div class="mb-4 position-relative">
+                                <input type="text" class="form-control predict-input pe-5" id="symptoms" name="symptoms"
+                                    placeholder="e.g., headache, fever, body aches..." required>
+                                <button type="button" class="voice-btn-enhanced" id="voiceBtn" title="Use Voice Input">
+                                    <i class="fas fa-microphone"></i>
+                                </button>
+                            </div>
+                            <div class="row g-2 mb-4">
+                                <div class="col-6">
+                                    <input type="number" class="form-control predict-input" name="age"
+                                        placeholder="Age (Optional)" min="1" max="120"
+                                        style="padding: 0.8rem 1.2rem; font-size: 0.95rem;">
+                                </div>
+                                <div class="col-6">
+                                    <select class="form-select predict-input" name="gender"
+                                        style="padding: 0.8rem 1.2rem; font-size: 0.95rem;">
+                                        <option value="">Gender (Optional)</option>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-predict w-100">
+                                <i class="fa-solid fa-wand-magic-sparkles me-2"></i>Analyze & Predict Disease
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enhanced Footer -->
+    <footer class="footer-enhanced">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <div class="footer-brand">
+                        <i class="fa-solid fa-brain-circuit"></i>MediSense
+                    </div>
+                    <p class="text-white-50">AI-powered healthcare platform providing instant disease predictions and
+                        connecting you with expert specialists.</p>
+                    <div class="social-links mt-3">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-2 offset-lg-2">
+                    <h6 class="text-white mb-3">Quick Links</h6>
+                    <div class="footer-links">
+                        <a href="/">Home</a>
+                        <a href="/about">About Us</a>
+                        <a href="/contact">Contact</a>
+                        <a href="/login">Login</a>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-2">
+                    <h6 class="text-white mb-3">Services</h6>
+                    <div class="footer-links">
+                        <a href="#predict-section">AI Diagnosis</a>
+                        <a href="/login">Find Doctors</a>
+                        <a href="/login">Book Appointment</a>
+                        <a href="/login">Health Records</a>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <h6 class="text-white mb-3">Legal</h6>
+                    <div class="footer-links">
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">Terms of Service</a>
+                        <a href="#">Disclaimer</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom text-center">
+                <p>&copy; 2025 MediSense. All rights reserved.</p>
+                <p class="small mt-2">Disclaimer: AI predictions are for informational purposes only. Always consult a
+                    qualified healthcare professional for medical advice.</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- Modals (Preserved from original logic) -->
+    {% if predicted_disease %}
+    <!-- Result Modal (Auto-triggered by JS if disease is present) -->
+    <div class="modal fade" id="resultModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">AI Diagnosis Result</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <h1 class="text-danger mb-3">{{ predicted_disease }}</h1>
+                    <p class="lead text-muted">Confidence Score: High</p>
+
+                    <!-- Action Buttons -->
+                    <div class="result-buttons d-flex justify-content-center gap-3 flex-wrap">
+                        <button class="btn btn-warning" data-bs-toggle="modal"
+                            data-bs-target="#descriptionModal">Description</button>
+                        <button class="btn btn-info text-white" data-bs-toggle="modal"
+                            data-bs-target="#precautionModal">Precautions</button>
+                        <button class="btn btn-danger" data-bs-toggle="modal"
+                            data-bs-target="#medicationsModal">Medications</button>
+                        <button class="btn btn-success" data-bs-toggle="modal"
+                            data-bs-target="#workoutsModal">Workouts</button>
+                        <button class="btn btn-warning" data-bs-toggle="modal"
+                            data-bs-target="#dietsModal">Diets</button>
+                        <a href="/view_doctors?specialization={{ predicted_disease }}&log_id={{ log_id }}"
+                            class="btn btn-primary">Find Doctor</a>
+                    </div>
+
+                    {% if pdf_report_url %}
+                    <div class="mt-4">
+                        <a href="{{ pdf_report_url }}" target="_blank" class="btn btn-outline-secondary btn-sm"><i
+                                class="fa-solid fa-file-pdf me-2"></i>Download AI Report</a>
+                    </div>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Info Modals (Preserved structure) -->
+    <div class="modal fade" id="descriptionModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Description</h5><button type="button" class="btn-close"
+                        data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>{{ dis_des }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="precautionModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Precautions</h5><button type="button" class="btn-close"
+                        data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <ul>{% for i in my_precautions %}<li>{{ i }}</li>{% endfor %}</ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="medicationsModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Medications</h5><button type="button" class="btn-close"
+                        data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <ul>{% for i in medications %}<li>{{ i }}</li>{% endfor %}</ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="workoutsModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Workouts</h5><button type="button" class="btn-close"
+                        data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <ul>{% for i in workout %}<li>{{ i }}</li>{% endfor %}</ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="dietsModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Diets</h5><button type="button" class="btn-close"
+                        data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <ul>{% for i in my_diet %}<li>{{ i }}</li>{% endfor %}</ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/theme.js') }}"></script>
+    <script>
+        // Auto-show result modal if prediction exists
+        document.addEventListener('DOMContentLoaded', function () {
+            var resultModalEl = document.getElementById('resultModal');
+            if (resultModalEl) {
+                var modal = new bootstrap.Modal(resultModalEl);
+                modal.show();
+            }
+
+            // Counter Animation for Stats
+            const counters = document.querySelectorAll('.counter');
+            const speed = 200;
+
+            counters.forEach(counter => {
+                const animate = () => {
+                    const value = +counter.getAttribute('data-target');
+                    const data = +counter.innerText.replace('+', '');
+                    const time = value / speed;
+
+                    if (data < value) {
+                        counter.innerText = Math.ceil(data + time) + '+';
+                        setTimeout(animate, 30);
+                    } else {
+                        counter.innerText = value + '+';
+                    }
+                };
+                animate();
+            });
+        });
+
+        // Speech Recognition (Preserved)
+        const voiceBtn = document.getElementById('voiceBtn');
+        const symptomsInput = document.getElementById('symptoms');
+
+        if ('webkitSpeechRecognition' in window) {
+            const recognition = new webkitSpeechRecognition();
+            recognition.continuous = false;
+            recognition.lang = 'en-US';
+
+            voiceBtn.addEventListener('click', () => {
+                recognition.start();
+                voiceBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            });
+
+            recognition.onresult = (event) => {
+                const transcript = event.results[0][0].transcript;
+                symptomsInput.value = transcript;
+                voiceBtn.innerHTML = '<i class="fas fa-microphone"></i>';
+            };
+
+            recognition.onerror = (event) => {
+                console.error('Speech recognition error', event.error);
+                voiceBtn.innerHTML = '<i class="fas fa-microphone-slash text-danger"></i>';
+            };
+
+            recognition.onend = () => {
+                voiceBtn.innerHTML = '<i class="fas fa-microphone"></i>';
+            };
+        } else {
+            voiceBtn.style.display = 'none';
+            console.log("Web Speech API not supported in this browser.");
+        }
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

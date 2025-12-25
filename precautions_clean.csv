@@ -1,0 +1,77 @@
+Disease,Precaution_1,Precaution_2,Precaution_3,Precaution_4,Precaution_5,Precaution_6,Precaution_7,Precaution_8
+Fungal infection,Keep skin dry and clean,Avoid sharing personal items,Wear loose cotton clothes,Change socks daily,Dry skin thoroughly after bath,Use antifungal powder,Wash clothes in hot water,Avoid tight footwear
+Acne,Keep face clean,Don't pop pimples,Use non-comedogenic products,Remove makeup,Shower after sweat,Sun protection,Avoid touching face,Manage stress
+Psoriasis,Moisturize daily,"Avoid triggers (stress, injury)",Sun exposure (controlled),Quit smoking,Manage stress,Avoid scratching,Warm baths,Use humidifiers
+Impetigo,Keep hygiene,Wash hands,Clip fingernails,Don't share towels/clothes,Wash linens in hot water,Keep sores covered,Stay home,Disinfect toys
+Chicken pox,Isolate to prevent spread,Trim fingernails,Don't scratch blisters,Wear loose clothing,Daily bath with lukewarm water,Hand hygiene,Vaccination,Monitor for secondary infections
+Allergy,Identify and avoid triggers,Keep windows closed during pollen season,Wear a mask in dusty areas,Wash hands frequently,Use hypoallergenic bedding,Shower after being outdoors,Avoid touching eyes,Carry allergy medication
+Drug Reaction,Stop taking the suspected drug immediately,Seek medical attention if severe,Keep a record of drug allergies,Wear medical alert bracelet,Inform doctors about allergies,Avoid self-medication,Stay hydrated,Monitor vital signs
+AIDS,Practice safe sex,Adhere strictly to ART (medication),Avoid sharing needles,Regular health check-ups,Hygiene maintenance,Avoid raw or undercooked food,Vaccinations (as advised),Stress management
+GERD,Avoid lying down after eating,Elevate head while sleeping,Lose excess weight,Avoid alcohol and smoking,Avoid triggering foods,Eat slowly,Wear loose clothing,Don't eat late at night
+Chronic cholestasis,Avoid alcohol completely,Maintain healthy weight,Follow prescribed medication strictly,Regular liver function tests,Avoid hepatotoxic drugs,Stay hydrated,Manage stress,Monitor symptoms
+Peptic ulcer disease,Avoid NSAIDs (painkillers),Quit smoking,Limit alcohol intake,Manage stress,Eat small frequent meals,Don't eat right before bed,Chew food thoroughly,Follow hygiene to avoid H. pylori
+Gastroenteritis,Frequent hand washing,Food hygiene,Drink safe/boiled water,Avoid sharing personal items,Rest as much as possible,Isolate to prevent spread,Disinfect surfaces,Hydrate frequently
+Jaundice,Rest completely,Avoid alcohol,Avoid hepatotoxic medications,Hygiene,"Vaccination (Hep A, B)",Drink clean water,Safe sex practices,Regular blood tests
+Dimorphic hemmorhoids(piles),Avoid straining,Don't delay bowel movement,Exercise regularly,Sitz baths,Avoid prolonged sitting,Cleanliness,Weight management,Manage constipation
+hepatitis A,Hand washing,Safe food and water,Vaccination,Separate bathroom use if possible,Disinfect surfaces,Avoid sexual contact during infection,Rest,Personal hygiene
+Hepatitis B,Vaccination,Safe sex,Avoid sharing needles/razors,Cover open cuts,Regular check-ups,Screening for liver cancer,Avoid alcohol,Inform partners
+Hepatitis C,Avoid sharing needles/personal items,Cover wounds,Safe sex,Avoid alcohol,Regular medical monitoring,Vaccinate for Hep A/B,Review medications,Dental hygiene
+Hepatitis D,Prevent Hep B infection (vaccine),Safe sex,Avoid IV drugs,Regular liver monitoring,Hygiene,Avoid hepatotoxins,Family screening,Support groups
+Hepatitis E,Drink purified water,Proper sanitation,Hand washing,Avoid raw shellfish,Hygiene during pregnancy,Rest,Safe food practices,Disposal of waste
+Alcoholic hepatitis,Stop drinking alcohol immediately,Join support group (AA),Regular checkups,Monitor weight,Infection prevention,Vaccinations,Avoid harmful drugs,Psychological counseling
+Diabetes,Monitor blood sugar regularly,Foot care,Regular eye exams,Manage blood pressure,Manage cholesterol,Quit smoking,Limit alcohol,Stress management
+Hypothyroidism,Regular thyroid function tests,Take medication empty stomach,Monitor weight,Skin care,Manage stress,Wear warm clothes,Regular exercise,Awareness of drug interactions
+Hyperthyroidism,Stress management,Eye protection (if Graves'),Regular monitoring,Calcium intake,Avoid iodine supplements,Quit smoking,Heart rate monitoring,Cool environment
+Hypoglycemia,Monitor blood sugar,Carry fast-acting sugar,Wear medical ID,Educate family/friends,Don't skip meals,Alcohol caution,Safety while driving,Regular check-ups
+Bronchial Asthma,Identify and avoid triggers,Carry rescue inhaler,Get vaccinated (flu/pneumonia),Avoid smoking/secondhand smoke,Keep home dust-free,Monitor peak flow,Warm up before exercise,Stress control
+Common Cold,Wash hands often,Cover cough/sneeze,Avoid touching face,Disinfect surfaces,Stay home,Rest,Hydrate,Use disposable tissues
+Pneumonia,Finish antibiotics,Rest is crucial,Humidifier use,No smoking,Vaccination (pneumococcal/flu),Hand hygiene,Follow-up X-ray,Avoid pollutants
+Tuberculosis,Complete full course of medication,Cover mouth when coughing,Mask usage,Ventilation,Isolation during infectious phase,Hand hygiene,Regular follow-up,Screen contacts
+Hypertension,Monitor blood pressure regularly,Reduce salt intake,Manage stress,Maintain healthy weight,Limit alcohol,Quit smoking,Follow medication schedule,Regular doctor visits
+Heart attack,Immediate medical help,Cardiac rehabilitation,Quit smoking,Manage stress,Control BP and cholesterol,Weight management,Regular checkups,Adhere to meds
+Varicose veins,Wear compression stockings,Elevate legs,Avoid long standing/sitting,Weight control,Exercise regularly,Avoid tight clothing,Skin care,Change position often
+Migraine,Regular sleep schedule,Manage stress,Avoid sensory overload,Keep a headache diary,Limit caffeine,Avoid known triggers,Relaxation techniques,Hydration
+Paralysis (brain hemorrhage),Control blood pressure,Fall prevention,Regular extensive rehabilitation,Pressure ulcer prevention,Assistive devices use,Caregiver support,Regular medical follow-up,Lifestyle modification
+(vertigo) Paroymsal Positional Vertigo,Avoid sudden head movements,Sleep with head elevated,Sit down if dizzy,Use night light,Fall prevention,Stress management,Avoid driving if dizzy,Hydration
+Malaria,Use mosquito nets,Apply mosquito repellent,Wear long sleeves,Eliminate standing water,Take prophylactic meds if traveling,Early diagnosis,Rest,Hydration
+Dengue,Prevent mosquito bites,Use mosquito nets,Rest completely,Monitor platelet count,Hydration,Watch for warning signs (bleeding),Wear protective clothing,Eliminate breeding sites
+Typhoid,Hand hygiene,Drink treated/boiled water,Eat cooked hot foods,Vaccination,Avoid street food,Proper sanitation,Complete antibiotic course,Rest
+Cervical spondylosis,Maintain good posture,Ergonomic workspace,Avoid heavy lifting,Use a cervical pillow,Take regular breaks from screens,Neck exercises,Apply heat/ice,Massage therapy
+Osteoarthristis,Weight management,Joint protection,Use assistive devices,Heat/Cold therapy,Good posture,Choosing right footwear,Avoid repetitive strain,Physical therapy
+Arthritis,Joint care,Maintain healthy weight,Quit smoking,Heat and cold treatment,Assistive devices,Regular exercise,Massage,Stress reduction
+Urinary tract infection,Hydration,Wipe front to back,Urinate after sex,Avoid irritating products,Cotton underwear,Don't hold urine,Showers instead of baths,Change pads frequently
+Eczema,Moisturize daily,Avoid harsh soaps,Use lukewarm water for baths,Wear cotton clothing,Identify and avoid triggers,Keep nails short,Use humidifier,
+Contact Dermatitis,Identify and avoid irritants,Wear protective gloves,Use fragrance-free products,Rinse skin after exposure,Apply barrier creams,Patch test new products,,
+Rosacea,Avoid sun exposure,Use gentle skincare,Avoid spicy foods,Avoid alcohol,Use sunscreen daily,Avoid hot beverages,Manage stress,
+Shingles,Keep rash clean,Avoid scratching,Wash hands frequently,Avoid contact with vulnerable people,Rest adequately,Wear loose clothing,Apply cool compresses,
+Urticaria,Identify triggers,Avoid tight clothing,Keep skin cool,Avoid hot showers,Manage stress,Avoid known allergens,Wear loose cotton clothes,
+COPD,Quit smoking,Avoid air pollutants,Get flu vaccine,Use prescribed inhalers,Practice breathing exercises,Avoid cold air,Stay active within limits,
+Sinusitis,Use saline nasal rinse,Apply warm compresses,Stay hydrated,Use humidifier,Avoid allergens,Don't blow nose too hard,Sleep with head elevated,
+Tonsillitis,Rest voice,Gargle with salt water,Stay hydrated,Avoid irritants,Complete medication course,Wash hands frequently,Avoid sharing utensils,
+Post-viral Cough,Stay hydrated,Use humidifier,Avoid irritants,Avoid cold air,Sleep with head elevated,Avoid smoking,Rest voice,
+Pharyngitis,Rest voice,Gargle with salt water,Stay hydrated,Avoid smoking,Use humidifier,Wash hands frequently,Avoid sharing utensils,
+IBS,Identify trigger foods,Eat regular meals,Manage stress,Exercise regularly,Avoid large meals,Keep food diary,Get adequate sleep,
+Gastritis,Avoid spicy foods,Eat smaller meals,Avoid alcohol,Don't skip meals,Manage stress,Avoid NSAIDs,Quit smoking,
+Food Poisoning,Stay hydrated with ORS,Rest completely,Wash hands frequently,Avoid solid foods initially,Avoid dairy,Avoid caffeine,Seek help if severe,
+Peptic Ulcer,Avoid NSAIDs,Quit smoking,Limit alcohol,Eat smaller meals,Manage stress,Avoid spicy foods,Complete treatment course,
+Tension Headache,Manage stress,Get adequate sleep,Maintain good posture,Take regular breaks from screens,Stay hydrated,Limit caffeine,Exercise regularly,
+Cervical Radiculopathy,Maintain good posture,Use ergonomic chair,Take breaks from computer,Use cervical pillow,Avoid heavy lifting,Apply heat or ice,Gentle stretching,
+Vertigo,Move slowly,Sit down when dizzy,Avoid sudden head movements,Use nightlight,Hold railings,Avoid driving during episodes,Stay hydrated,
+PCOS,Maintain healthy weight,Exercise regularly,Manage stress,Monitor symptoms,Regular checkups,Track menstrual cycle,Avoid processed foods,
+Viral Fever,Rest completely,Stay hydrated,Monitor temperature,Wash hands frequently,Avoid contact with others,Complete rest,Seek help if high fever persists,
+Flu,Rest completely,Stay hydrated,Cover cough and sneezes,Wash hands frequently,Stay home,Monitor symptoms,Get flu vaccine yearly,
+Angina,Rest when symptoms occur,Avoid heavy exertion,Manage stress,Quit smoking,Control blood pressure,Regular checkups,Carry prescribed medication,
+Palpitations,Reduce caffeine,Reduce alcohol,Manage stress,Get adequate sleep,Stay hydrated,Avoid stimulants,Practice relaxation techniques,
+Kidney Stones,Drink plenty of water,Limit salt intake,Limit animal protein,Avoid oxalate-rich foods if advised,Monitor urine,Stay active,Follow dietary advice,
+Diaper Rash,Change diapers frequently,Keep area dry,Use barrier cream,Allow air exposure,Avoid tight diapers,Clean gently with water,Avoid fragranced wipes,
+Otitis Media,Keep ear dry,Apply warm compress,Elevate head during sleep,Complete any prescribed course,Avoid secondhand smoke,Breastfeed if possible,Keep immunizations current,
+Hand Foot Mouth Disease,Wash hands frequently,Avoid close contact,Disinfect surfaces,Keep child hydrated,Monitor for dehydration,Isolate during illness,Complete recovery before school,
+Muscle Strain,Rest the injured muscle,Apply ice for first 48 hours,Compress with bandage,Elevate if possible,Avoid strenuous activity,Warm up before exercise,Stretch regularly,
+Sciatica,Maintain good posture,Avoid prolonged sitting,Use proper lifting technique,Apply heat or ice,Stretch regularly,Sleep on firm mattress,Stay active within limits,
+Urinary Tract Infection,Stay hydrated,Wipe front to back,Urinate after intercourse,Avoid irritating products,Wear cotton underwear,Dont hold urine,Complete treatment course,
+COVID-19,Wear mask in crowded places,Wash hands frequently,Maintain social distance,Get vaccinated,Avoid touching face,Isolate if symptomatic,Monitor oxygen levels,
+Meningitis,Seek immediate medical care,Complete vaccination,Avoid close contact with infected,Practice good hygiene,Cover mouth when coughing,Rest completely,Stay hydrated,
+Anemia,Eat iron-rich foods,Take prescribed supplements,Avoid tea with meals,Include vitamin C,Regular blood tests,Get adequate rest,Avoid blood-thinning substances,
+Conjunctivitis,Wash hands frequently,Avoid touching eyes,Avoid sharing towels,Replace eye makeup,Avoid contact lenses,Use clean pillowcases,Avoid sharing eye drops,
+Seborrheic Dermatitis,Use medicated shampoo,Keep scalp clean,Avoid harsh hair products,Manage stress,Get sunlight exposure,Avoid scratching,Use gentle skin products,
+Ringworm,Keep affected area clean and dry,Avoid sharing personal items,Wear loose cotton clothing,Wash hands after touching rash,Disinfect surfaces,Complete treatment course,Avoid scratching,
