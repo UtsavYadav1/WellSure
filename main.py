@@ -184,6 +184,15 @@ def get_predicted_value(user_text):
 def google_verification():
     return send_from_directory('static', 'googleb2777ecea8879182.html')
 
+# SEO: Serve sitemap and robots.txt at root
+@app.route('/sitemap.xml')
+def sitemap():
+    return send_from_directory('static', 'sitemap.xml')
+
+@app.route('/robots.txt')
+def robots():
+    return send_from_directory('static', 'robots.txt')
+
 @app.route("/")
 def index():
     # Fetch real stats from database for home page

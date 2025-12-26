@@ -15,4 +15,4 @@ Disallow: /admin_dashboard
 Disallow: /my_appointments
 
 # Sitemap location
-Sitemap: https://medisense-app.up.railway.app/static/sitemap.xml
+Sitemap: https://medisense-app.up.railway.app/sitemap.xml
