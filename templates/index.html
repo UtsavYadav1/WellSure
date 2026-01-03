@@ -25,11 +25,71 @@
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="https://WellSure-app.up.railway.app/">
+    <meta name="twitter:url" content="https://wellsure-app.up.railway.app/">
     <meta name="twitter:title" content="WellSure - AI-Powered Health Diagnosis Platform">
     <meta name="twitter:description"
         content="Experience the future of healthcare with AI-powered symptom analysis, instant disease predictions, and seamless doctor booking.">
-    <meta name="twitter:image" content="https://WellSure-app.up.railway.app/static/images/logo.png">
+    <meta name="twitter:image" content="https://wellsure-app.up.railway.app/static/images/logo.png">
+
+    <!-- Schema.org Structured Data for Rich Google Results -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "WellSure",
+        "alternateName": "WellSure AI Healthcare",
+        "url": "https://wellsure-app.up.railway.app",
+        "logo": "https://wellsure-app.up.railway.app/static/images/logo.png",
+        "description": "WellSure is an intelligent AI-powered telemedicine platform that analyzes symptoms, provides health predictions, and connects patients with specialist doctors.",
+        "founder": {
+            "@type": "Person",
+            "name": "Utsav Yadav",
+            "jobTitle": "Founder & Developer",
+            "sameAs": [
+                "https://www.linkedin.com/in/utsav-yadav-a85953257"
+            ]
+        },
+        "sameAs": [
+            "https://www.linkedin.com/in/utsav-yadav-a85953257",
+            "https://github.com/UtsavYadav1"
+        ],
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "contactType": "Customer Support",
+            "email": "support@wellsure.com"
+        }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "WellSure",
+        "url": "https://wellsure-app.up.railway.app",
+        "description": "AI-Powered Health Diagnosis & Doctor Booking Platform",
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://wellsure-app.up.railway.app/check_symptoms?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+        }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "MedicalWebPage",
+        "name": "WellSure - AI Health Diagnosis",
+        "description": "Check your symptoms using AI and get instant health predictions with WellSure",
+        "mainEntity": {
+            "@type": "MedicalCondition",
+            "name": "Symptom Analysis"
+        },
+        "author": {
+            "@type": "Person",
+            "name": "Utsav Yadav"
+        }
+    }
+    </script>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
