@@ -8,6 +8,7 @@ from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 import ast
+from authlib.integrations.flask_client import OAuth
 
 # Optional ML imports (not required for rules-based diagnosis)
 try:
@@ -31,6 +32,17 @@ load_dotenv()
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY', 'medimind_secure_secret_key')
 app.config['UPLOAD_FOLDER'] = 'static/uploads'
+
+# Google OAuth Configuration
+oauth = OAuth(app)
+google = oauth.register(
+    name='google',
+    client_id=os.environ.get('GOOGLE_CLIENT_ID'),
+    client_secret=os.environ.get('GOOGLE_CLIENT_SECRET'),
+    server_metadata_url='https://accounts.google.com/.well-known/openid-configuration',
+    client_kwargs={'scope': 'openid email profile'}
+)
+
 
 # Initialize Rules Engine
 rules_engine = RulesEngine()
@@ -692,6 +704,87 @@ def logout():
     session.clear()
     flash("Logged out successfully.", "info")
     return redirect(url_for('login'))
+
+
+# ==========================================
+# GOOGLE OAUTH ROUTES
+# ==========================================
+@app.route('/auth/google')
+def google_login():
+    """Initiate Google OAuth login"""
+    redirect_uri = url_for('google_callback', _external=True)
+    return google.authorize_redirect(redirect_uri)
+
+
+@app.route('/auth/google/callback')
+def google_callback():
+    """Handle Google OAuth callback"""
+    try:
+        token = google.authorize_access_token()
+        user_info = token.get('userinfo')
+        
+        if not user_info:
+            flash("Failed to get user info from Google.", "danger")
+            return redirect(url_for('login'))
+        
+        email = user_info.get('email')
+        name = user_info.get('name', email.split('@')[0])
+        
+        if not email:
+            flash("No email provided by Google.", "danger")
+            return redirect(url_for('login'))
+        
+        conn = database.get_db_connection()
+        cursor = conn.cursor(dictionary=True)
+        
+        # Check if user exists in users table (patients)
+        cursor.execute("SELECT * FROM users WHERE email = %s", (email,))
+        user = cursor.fetchone()
+        
+        if user:
+            # Existing user - log them in
+            session['user_id'] = user['id']
+            session['role'] = 'patient'
+            session['name'] = user['name']
+            utils.log_activity(user['id'], 'patient', 'login', "Google OAuth login")
+            flash(f"Welcome back, {user['name']}!", "success")
+            cursor.close()
+            conn.close()
+            return redirect(url_for('patient_dashboard'))
+        else:
+            # New user - create account and log them in
+            try:
+                # Generate a random password (user won't need it, they'll use Google)
+                import secrets
+                random_password = secrets.token_urlsafe(16)
+                hashed_password = generate_password_hash(random_password)
+                
+                cursor.execute(
+                    "INSERT INTO users (name, email, password, city, address, pincode) VALUES (%s, %s, %s, %s, %s, %s)",
+                    (name, email, hashed_password, '', '', '')
+                )
+                conn.commit()
+                user_id = cursor.lastrowid
+                
+                session['user_id'] = user_id
+                session['role'] = 'patient'
+                session['name'] = name
+                
+                utils.log_activity(user_id, 'patient', 'signup', f"New user via Google OAuth: {email}")
+                flash(f"Welcome to WellSure, {name}! Please complete your profile.", "success")
+                cursor.close()
+                conn.close()
+                return redirect(url_for('patient_dashboard'))
+            except Exception as e:
+                conn.rollback()
+                flash(f"Error creating account: {e}", "danger")
+                cursor.close()
+                conn.close()
+                return redirect(url_for('signup'))
+                
+    except Exception as e:
+        flash(f"Google login failed: {e}", "danger")
+        return redirect(url_for('login'))
 
 
 # ==========================================
