@@ -21,6 +21,40 @@
 
 <body>
 
+    <!-- Address Reminder Modal -->
+    {% if address_incomplete %}
+    <div class="modal fade" id="addressReminderModal" tabindex="-1" aria-labelledby="addressReminderModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header border-0 pb-0">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center px-4 pb-4">
+                    <div class="bg-warning bg-opacity-10 p-4 rounded-circle d-inline-block mb-3">
+                        <i class="fa-solid fa-location-dot fa-3x text-warning"></i>
+                    </div>
+                    <h4 class="fw-bold text-main mb-2">Complete Your Profile</h4>
+                    <p class="text-muted">Add your address to find doctors near you! We'll show distance-based
+                        recommendations.</p>
+                    <div class="d-flex gap-2 justify-content-center mt-4">
+                        <a href="/patient_dashboard" class="btn btn-primary-gradient px-4">
+                            <i class="fa-solid fa-user-pen me-2"></i>Update Profile
+                        </a>
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Later</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var modal = new bootstrap.Modal(document.getElementById('addressReminderModal'));
+            modal.show();
+        });
+    </script>
+    {% endif %}
+
     <!-- Standard Global Navbar -->
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">

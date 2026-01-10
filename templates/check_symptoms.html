@@ -550,6 +550,25 @@
     <!-- Script for Voice Recognition -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            // Auto-submit if pending symptoms exist
+            {% if pending_symptoms %}
+            const form = document.querySelector('form[action="/predict"]');
+            if (form) {
+                const symptomsInput = form.querySelector('[name="symptoms"]');
+                const ageInput = form.querySelector('[name="age"]');
+                const genderSelect = form.querySelector('[name="gender"]');
+
+                if (symptomsInput) symptomsInput.value = "{{ pending_symptoms | e }}";
+                if (ageInput && "{{ pending_age }}") ageInput.value = "{{ pending_age | e }}";
+                if (genderSelect && "{{ pending_gender }}") genderSelect.value = "{{ pending_gender | e }}";
+
+                // Auto-submit after brief delay
+                setTimeout(function () {
+                    form.submit();
+                }, 500);
+            }
+            {% endif %}
+
             const voiceBtn = document.getElementById('voiceBtn');
             const symptomsInput = document.getElementById('symptoms');
 

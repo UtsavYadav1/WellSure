@@ -255,13 +255,33 @@ def check_symptoms():
     if 'user_id' not in session:
         flash("Please login to use AI Diagnosis.", "info")
         return redirect(url_for('login'))
-    return render_template('check_symptoms.html')
+    
+    # Check for pending symptoms from guest session
+    pending_symptoms = session.pop('pending_symptoms', None)
+    pending_age = session.pop('pending_age', None)
+    pending_gender = session.pop('pending_gender', None)
+    
+    return render_template('check_symptoms.html', 
+                           pending_symptoms=pending_symptoms,
+                           pending_age=pending_age,
+                           pending_gender=pending_gender)
 
 
 @app.route('/predict', methods=['POST'])
 def predict():
+    symptoms = request.form.get('symptoms')
+    age = request.form.get('age')
+    gender = request.form.get('gender')
+    
+    # Store symptoms in session for guests (will be processed after login)
     if 'user_id' not in session:
+        if symptoms and symptoms != "Symptoms":
+            session['pending_symptoms'] = symptoms
+            session['pending_age'] = age
+            session['pending_gender'] = gender
+            flash("Please login to get your diagnosis results.", "info")
         return redirect(url_for('login'))
+
 
     symptoms = request.form.get('symptoms')
     if not symptoms or symptoms == "Symptoms":
@@ -689,6 +709,11 @@ def login():
             utils.log_activity(user['id'], role, 'login', "User logged in")
 
             flash("Login Successful!", "success")
+            
+            # Check for pending symptoms from guest session
+            if role == 'patient' and session.get('pending_symptoms'):
+                return redirect(url_for('check_symptoms'))
+            
             if role == 'patient':
                 return redirect(url_for('patient_dashboard'))
             elif role == 'doctor':
@@ -754,6 +779,9 @@ def google_callback():
             flash(f"Welcome back, {user['name']}!", "success")
             cursor.close()
             conn.close()
+            # Check for pending symptoms
+            if session.get('pending_symptoms'):
+                return redirect(url_for('check_symptoms'))
             return redirect(url_for('patient_dashboard'))
         else:
             # New user - create account and log them in
@@ -778,6 +806,9 @@ def google_callback():
                 flash(f"Welcome to WellSure, {name}! Please complete your profile.", "success")
                 cursor.close()
                 conn.close()
+                # Check for pending symptoms
+                if session.get('pending_symptoms'):
+                    return redirect(url_for('check_symptoms'))
                 return redirect(url_for('patient_dashboard'))
             except Exception as e:
                 conn.rollback()
@@ -895,6 +926,7 @@ def view_doctors():
         return redirect(url_for('login'))
 
     specialization = request.args.get('specialization')
+    log_id = request.args.get('log_id')
     conn = database.get_db_connection()
     cursor = conn.cursor(dictionary=True)
 
@@ -908,13 +940,18 @@ def view_doctors():
     specs = [row['name'] for row in cursor.fetchall()]
 
     patient_coords = None
+    address_incomplete = False
     if 'user_id' in session and session.get('role') == 'patient':
-        cursor.execute("SELECT lat, lng FROM users WHERE id=%s", (session['user_id'],))
+        cursor.execute("SELECT lat, lng, address, city, pincode FROM users WHERE id=%s", (session['user_id'],))
         patient = cursor.fetchone()
-        if patient and patient.get('lat') and patient.get('lng'):
-             patient_coords = {'lat': patient['lat'], 'lng': patient['lng']}
-             # Use Utility
-             utils.process_doctors_data(doctors_list, patient['lat'], patient['lng'])
+        if patient:
+            # Check if address is incomplete
+            if not patient.get('address') or not patient.get('city') or not patient.get('pincode'):
+                address_incomplete = True
+            if patient.get('lat') and patient.get('lng'):
+                patient_coords = {'lat': patient['lat'], 'lng': patient['lng']}
+                # Use Utility
+                utils.process_doctors_data(doctors_list, patient['lat'], patient['lng'])
 
     # Normalize time fields for JSON serialization compatibility
     for doc in doctors_list:
@@ -935,7 +972,9 @@ def view_doctors():
         'view_doctors.html',
         doctors=doctors_list,
         specializations=specs,
-        patient_coords=patient_coords
+        patient_coords=patient_coords,
+        address_incomplete=address_incomplete,
+        log_id=log_id
     )
 
 
