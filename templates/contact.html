@@ -398,24 +398,27 @@
               <p class="text-muted">Fill out the form below and we'll get back to you within 24 hours.</p>
             </div>
 
-            <form>
+            <form action="https://formspree.io/f/mreezqdb" method="POST">
               <div class="row g-3">
                 <div class="col-md-6">
                   <label class="form-label-custom">Your Name</label>
-                  <input type="text" class="form-control form-control-custom" placeholder="John Doe">
+                  <input type="text" name="name" class="form-control form-control-custom" placeholder="John Doe"
+                    required>
                 </div>
                 <div class="col-md-6">
                   <label class="form-label-custom">Email Address</label>
-                  <input type="email" class="form-control form-control-custom" placeholder="name@example.com">
+                  <input type="email" name="email" class="form-control form-control-custom"
+                    placeholder="name@example.com" required>
                 </div>
                 <div class="col-12">
                   <label class="form-label-custom">Subject</label>
-                  <input type="text" class="form-control form-control-custom" placeholder="How can we help you?">
+                  <input type="text" name="subject" class="form-control form-control-custom"
+                    placeholder="How can we help you?" required>
                 </div>
                 <div class="col-12">
                   <label class="form-label-custom">Message</label>
-                  <textarea class="form-control form-control-custom" rows="5"
-                    placeholder="Write your message here..."></textarea>
+                  <textarea name="message" class="form-control form-control-custom" rows="5"
+                    placeholder="Write your message here..." required></textarea>
                 </div>
                 <div class="col-12 text-center mt-4">
                   <button type="submit" class="btn btn-submit">
