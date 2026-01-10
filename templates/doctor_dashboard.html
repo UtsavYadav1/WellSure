@@ -129,7 +129,7 @@
     <div class="container mt-5 pt-4">
         <div class="row g-4">
             <!-- Left: Profile Management -->
-            <div class="col-lg-4">
+            <div class="col-lg-4" id="profile-section">
                 <div class="card-pro h-100">
                     <h5 class="mb-4 text-main"><i class="fa-solid fa-user-doctor me-2 text-primary"></i>My Profile</h5>
 
@@ -204,7 +204,7 @@
             </div>
 
             <!-- Right: Appointments -->
-            <div class="col-lg-8">
+            <div class="col-lg-8" id="appointments-section">
                 <div class="card-pro h-100">
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <h5 class="mb-0 text-main">Today's Appointments</h5>
@@ -504,18 +504,18 @@
                 <i class="fa-solid fa-house"></i>
                 <span>Home</span>
             </a>
-            <a href="/doctor_dashboard" class="nav-item active">
-                <i class="fa-solid fa-gauge-high"></i>
-                <span>Dashboard</span>
+            <a href="#profile-section" class="nav-item" onclick="scrollToSection('profile-section')">
+                <i class="fa-solid fa-user-pen"></i>
+                <span>Profile</span>
             </a>
-            <a href="/doctor_dashboard#appointments" class="nav-item nav-main">
+            <a href="#appointments-section" class="nav-item nav-main active"
+                onclick="scrollToSection('appointments-section')">
                 <i class="fa-solid fa-calendar-check"></i>
                 <span>Appts</span>
             </a>
-            <a href="/doctor_dashboard" class="nav-item" data-bs-toggle="modal" data-bs-target="#profileModal"
-                onclick="return false;">
-                <i class="fa-solid fa-user-pen"></i>
-                <span>Profile</span>
+            <a href="/about" class="nav-item">
+                <i class="fa-solid fa-circle-info"></i>
+                <span>About</span>
             </a>
             <a href="/logout" class="nav-item">
                 <i class="fa-solid fa-right-from-bracket"></i>
@@ -523,6 +523,16 @@
             </a>
         </div>
     </nav>
+
+    <script>
+        function scrollToSection(sectionId) {
+            event.preventDefault();
+            const element = document.getElementById(sectionId);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+    </script>
 
 </body>
 
