@@ -404,7 +404,13 @@
         <div class="d-flex align-items-center">
           <button class="theme-btn me-3" id="themeToggle" title="Toggle Theme"><i class="fa-solid fa-moon"></i></button>
           {% if session.name %}
+          {% if session.role == 'doctor' %}
+          <a href="/doctor_dashboard" class="btn btn-outline-secondary btn-sm">Dr. Dashboard</a>
+          {% elif session.role == 'admin' %}
+          <a href="/admin_dashboard" class="btn btn-outline-secondary btn-sm">Admin Panel</a>
+          {% else %}
           <a href="/patient_dashboard" class="btn btn-outline-secondary btn-sm">Dashboard</a>
+          {% endif %}
           {% else %}
           <a href="/login" class="btn btn-primary-gradient btn-sm">Login</a>
           {% endif %}
