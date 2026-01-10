@@ -1046,6 +1046,39 @@
         </div>
     </footer>
 
+    <!-- Mobile Bottom Navigation (App-like) -->
+    <nav class="mobile-bottom-nav">
+        <div class="nav-container">
+            <a href="/" class="nav-item active">
+                <i class="fa-solid fa-house"></i>
+                <span>Home</span>
+            </a>
+            <a href="/check_symptoms" class="nav-item">
+                <i class="fa-solid fa-stethoscope"></i>
+                <span>Symptoms</span>
+            </a>
+            <a href="#predict-section" class="nav-item nav-main">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                <span>Diagnose</span>
+            </a>
+            <a href="/view_doctors" class="nav-item">
+                <i class="fa-solid fa-user-doctor"></i>
+                <span>Doctors</span>
+            </a>
+            {% if session.user_id %}
+            <a href="/patient_dashboard" class="nav-item">
+                <i class="fa-solid fa-user"></i>
+                <span>Profile</span>
+            </a>
+            {% else %}
+            <a href="/login" class="nav-item">
+                <i class="fa-solid fa-right-to-bracket"></i>
+                <span>Login</span>
+            </a>
+            {% endif %}
+        </div>
+    </nav>
+
 
     <!-- Modals (Preserved from original logic) -->
     {% if predicted_disease %}

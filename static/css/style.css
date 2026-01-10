@@ -845,7 +845,7 @@ img {
 
 /* Print styles - hide nav and show content nicely */
 @media print {
-    .navbar, .btn, .theme-btn, .followup-section {
+    .navbar, .btn, .theme-btn, .followup-section, .mobile-bottom-nav {
         display: none !important;
     }
     
@@ -858,5 +858,203 @@ img {
     .card-pro, .modal-content {
         box-shadow: none;
         border: 1px solid #ddd;
+    }
+}
+
+/* =============================================================================
+   MOBILE APP-LIKE BOTTOM NAVIGATION
+   ============================================================================= */
+
+.mobile-bottom-nav {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--bg-card);
+    border-top: 1px solid var(--border-color);
+    padding: 8px 0;
+    z-index: 1050;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.mobile-bottom-nav .nav-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.mobile-bottom-nav .nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: var(--text-muted);
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    transition: var(--transition);
+    min-width: 60px;
+}
+
+.mobile-bottom-nav .nav-item:hover,
+.mobile-bottom-nav .nav-item.active {
+    color: var(--primary);
+}
+
+.mobile-bottom-nav .nav-item.active {
+    background: rgba(0, 188, 212, 0.1);
+}
+
+.mobile-bottom-nav .nav-item i {
+    font-size: 1.25rem;
+    margin-bottom: 4px;
+}
+
+.mobile-bottom-nav .nav-item span {
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+/* Center highlight for main action */
+.mobile-bottom-nav .nav-item.nav-main {
+    position: relative;
+}
+
+.mobile-bottom-nav .nav-item.nav-main i {
+    background: linear-gradient(135deg, var(--primary) 0%, #0097a7 100%);
+    color: white;
+    padding: 12px;
+    border-radius: 50%;
+    font-size: 1.1rem;
+    margin-bottom: 2px;
+    box-shadow: 0 4px 15px rgba(0, 188, 212, 0.4);
+}
+
+/* Show only on mobile */
+@media (max-width: 768px) {
+    .mobile-bottom-nav {
+        display: block;
+    }
+    
+    /* Add bottom padding to body to account for bottom nav */
+    body {
+        padding-bottom: 70px;
+    }
+    
+    /* Hide footer on mobile since we have bottom nav */
+    .footer-enhanced {
+        padding-bottom: 80px;
+    }
+}
+
+/* =============================================================================
+   IMPROVED MOBILE NAVBAR STYLING
+   ============================================================================= */
+
+@media (max-width: 768px) {
+    /* Cleaner mobile navbar */
+    .navbar {
+        padding: 8px 0;
+    }
+    
+    .navbar-brand {
+        font-size: 1.25rem;
+    }
+    
+    .navbar-brand img {
+        height: 36px !important;
+        width: 36px !important;
+    }
+    
+    /* Hamburger button styling */
+    .navbar-toggler {
+        border: none;
+        padding: 8px;
+        background: var(--bg-surface);
+        border-radius: var(--radius-sm);
+    }
+    
+    .navbar-toggler:focus {
+        box-shadow: none;
+        outline: none;
+    }
+    
+    /* Mobile menu dropdown */
+    .navbar-collapse {
+        position: absolute;
+        top: 100%;
+        left: 10px;
+        right: 10px;
+        background: var(--bg-card);
+        border-radius: var(--radius-md);
+        padding: 15px;
+        border: 1px solid var(--border-color);
+        box-shadow: var(--shadow-lg);
+        margin-top: 8px;
+    }
+    
+    .navbar-collapse .navbar-nav {
+        margin-bottom: 15px;
+    }
+    
+    .navbar-collapse .nav-link {
+        padding: 12px 16px !important;
+        border-radius: var(--radius-sm);
+        margin-bottom: 4px;
+    }
+    
+    .navbar-collapse .nav-link.active {
+        background: rgba(0, 188, 212, 0.15);
+    }
+    
+    /* Hide theme toggle in mobile dropdown */
+    .navbar-collapse .theme-btn {
+        display: inline-flex;
+    }
+    
+    /* Login button full width on mobile */
+    .navbar-collapse .btn {
+        width: 100%;
+        margin-top: 10px;
+    }
+}
+
+/* =============================================================================
+   IMPROVED HERO SECTION FOR MOBILE
+   ============================================================================= */
+
+@media (max-width: 576px) {
+    .hero-section {
+        padding: 40px 0 30px;
+        min-height: auto;
+    }
+    
+    .hero-title {
+        font-size: 1.75rem !important;
+        line-height: 1.2;
+        margin-bottom: 16px;
+    }
+    
+    .hero-subtitle {
+        font-size: 0.95rem;
+        margin-bottom: 24px;
+        line-height: 1.5;
+    }
+    
+    /* Hero buttons stack on mobile */
+    .hero-section .d-flex.gap-3 {
+        flex-direction: column;
+        gap: 12px !important;
+    }
+    
+    .hero-section .btn {
+        width: 100%;
     }
 }
