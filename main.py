@@ -26,12 +26,14 @@ from rules_engine import RulesEngine
 import followup_questions  # UX Feature: Follow-up questions for clarification
 
 # Load environment variables from .env file (if exists)
-load_dotenv()
+# Load environment variables from .env file (if exists)
+basedir = os.path.abspath(os.path.dirname(__file__))
+load_dotenv(os.path.join(basedir, '.env'))
 
 # flask app
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY', 'medimind_secure_secret_key')
-app.config['UPLOAD_FOLDER'] = 'static/uploads'
+app.config['UPLOAD_FOLDER'] = os.path.join(basedir, 'static', 'uploads')
 
 # Fix for Railway proxy - ensures correct HTTPS URL generation
 from werkzeug.middleware.proxy_fix import ProxyFix
@@ -54,18 +56,18 @@ rules_engine = RulesEngine()
 # ==========================================
 # Load datasets
 # ==========================================
-sym_des = pd.read_csv("symptoms_df_clean.csv")
-precautions = pd.read_csv("precautions_clean.csv")
-workout = pd.read_csv("workout_clean.csv")
-description = pd.read_csv("description.csv")
-medications = pd.read_csv('medications_clean.csv')
-diets = pd.read_csv("diet_clean.csv")
-doctors = pd.read_csv("doctor_specialization_clean.csv")  # disease → recommended specialist
+sym_des = pd.read_csv(os.path.join(basedir, "symptoms_df_clean.csv"))
+precautions = pd.read_csv(os.path.join(basedir, "precautions_clean.csv"))
+workout = pd.read_csv(os.path.join(basedir, "workout_clean.csv"))
+description = pd.read_csv(os.path.join(basedir, "description.csv"))
+medications = pd.read_csv(os.path.join(basedir, 'medications_clean.csv'))
+diets = pd.read_csv(os.path.join(basedir, "diet_clean.csv"))
+doctors = pd.read_csv(os.path.join(basedir, "doctor_specialization_clean.csv"))  # disease → recommended specialist
 
 # ==========================================
 # Load BioBERT / DistilBERT Model and Tokenizer (OPTIONAL)
 # ==========================================
-MODEL_PATH = "medical_bert_model"
+MODEL_PATH = os.path.join(basedir, "medical_bert_model")
 model = None
 tokenizer = None
 device = None
@@ -87,7 +89,7 @@ else:
 # Load Label Encoder
 le = None
 try:
-    with open('label_encoder.pkl', 'rb') as f:
+    with open(os.path.join(basedir, 'label_encoder.pkl'), 'rb') as f:
         le = pickle.load(f)
     print("Label encoder loaded.")
 except Exception as e:
@@ -336,15 +338,19 @@ def predict():
                 workout = []
                 
                 # 2. Generate PDF
+                # 2. Generate PDF
                 timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
                 pdf_filename = f"report_{session.get('user_id', 'guest')}_{timestamp}.pdf"
+                # Store relative in DB for portability
                 pdf_path = os.path.join("static", "reports", pdf_filename)
                 
-                os.makedirs(os.path.join("static", "reports"), exist_ok=True)
+                # Use absolute for generation
+                abs_pdf_path = os.path.join(basedir, pdf_path)
+                os.makedirs(os.path.dirname(abs_pdf_path), exist_ok=True)
                 
                 patient_name = session.get('name', 'Guest')
                 utils.generate_pdf_report(
-                    pdf_path, patient_name, predicted_disease, symptoms, 
+                    abs_pdf_path, patient_name, predicted_disease, symptoms, 
                     dis_des, meds, my_precautions, my_diet, workout, age=age, gender=gender
                 )
 
@@ -409,16 +415,20 @@ def predict():
 
             import os
             # 1. Generate PDF
+            # 1. Generate PDF
             timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
             pdf_filename = f"report_{session.get('user_id', 'guest')}_{timestamp}.pdf"
+            # Store relative in DB
             pdf_path = os.path.join("static", "reports", pdf_filename)
             pdf_url = url_for('static', filename=f'reports/{pdf_filename}')
             
-            os.makedirs(os.path.join("static", "reports"), exist_ok=True)
+            # Use absolute for generation
+            abs_pdf_path = os.path.join(basedir, pdf_path)
+            os.makedirs(os.path.dirname(abs_pdf_path), exist_ok=True)
             
             patient_name = session.get('name', 'Guest')
             utils.generate_pdf_report(
-                pdf_path, patient_name, predicted_disease, symptoms, 
+                abs_pdf_path, patient_name, predicted_disease, symptoms, 
                 dis_des, meds, my_precautions, rec_diet, wrk, age=age, gender=gender
             )
 
@@ -608,7 +618,9 @@ def download_report(log_id):
     
     if log and log['pdf_path']:
         from flask import send_file
-        return send_file(log['pdf_path'], as_attachment=True)
+        # Ensure absolute path for sending
+        abs_path = os.path.join(basedir, log['pdf_path'])
+        return send_file(abs_path, as_attachment=True)
     else:
         flash("Report not found or access denied.", "danger")
         return redirect(url_for('home'))
@@ -1524,9 +1536,13 @@ def upload_prescription(appt_id):
     if file and file.filename:
         import os
         filename = f"presc_{appt_id}_{datetime.now().strftime('%Y%m%d%H%M%S')}.pdf"
-        file_path = os.path.join("static", "prescriptions", filename)
-        os.makedirs(os.path.join("static", "prescriptions"), exist_ok=True)
-        file.save(file_path)
+        # Store relative path in DB, use absolute for saving
+        relative_path = os.path.join("static", "prescriptions", filename)
+        file_path = relative_path # DB storage
+        
+        abs_path = os.path.join(basedir, relative_path)
+        os.makedirs(os.path.dirname(abs_path), exist_ok=True)
+        file.save(abs_path)
     
     conn = database.get_db_connection()
     cursor = conn.cursor()
@@ -1563,7 +1579,9 @@ def download_prescription(appt_id):
     
     if appt and appt['prescription_path']:
         from flask import send_file
-        return send_file(appt['prescription_path'], as_attachment=True)
+        # Ensure absolute path for sending
+        abs_path = os.path.join(basedir, appt['prescription_path'])
+        return send_file(abs_path, as_attachment=True)
     else:
         flash("File not found", "danger")
         return redirect(url_for('home'))
