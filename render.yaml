@@ -1,0 +1,20 @@
+# Build Command: pip install -r requirements_render.txt
+# Start Command: gunicorn main:app
+
+services:
+  - type: web
+    name: wellsure
+    env: python
+    buildCommand: pip install -r requirements_render.txt
+    startCommand: gunicorn main:app
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.9.18
+      - key: DATABASE_URL
+        sync: false
+      - key: SECRET_KEY
+        generateValue: true
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      - key: GOOGLE_CLIENT_SECRET
+        sync: false

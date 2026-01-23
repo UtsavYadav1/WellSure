@@ -222,7 +222,7 @@ def index():
     }
     try:
         conn = database.get_db_connection()
-        cursor = conn.cursor(dictionary=True)
+        cursor = database.get_dict_cursor(conn)
         
         # Count all users
         cursor.execute("SELECT COUNT(*) as count FROM users")
@@ -364,11 +364,12 @@ def predict():
                         INSERT INTO symptoms_logs 
                         (patient_id, symptoms_text, disease_predicted, description, medications, precautions, diets, workouts, pdf_path)
                         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+                        RETURNING id
                         """,
                         (session['user_id'], symptoms, predicted_disease, dis_des, str(meds), str(my_precautions), str(my_diet), str(workout), pdf_path)
                     )
+                    log_id = cursor.fetchone()[0]
                     conn.commit()
-                    log_id = cursor.lastrowid
                     cursor.close()
                     conn.close()
                 except Exception as e:
@@ -444,11 +445,12 @@ def predict():
                     INSERT INTO symptoms_logs 
                     (patient_id, symptoms_text, disease_predicted, description, medications, precautions, diets, workouts, pdf_path, confidence_level, recommended_specialist, patient_age, patient_gender)
                     VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                    RETURNING id
                     """,
                     (session['user_id'], symptoms, predicted_disease, dis_des, str(meds), str(my_precautions), str(rec_diet), str(wrk), pdf_path, confidence_level, specialist, age, gender)
                 )
+                log_id = cursor.fetchone()[0]
                 conn.commit()
-                log_id = cursor.lastrowid
                 cursor.close()
                 conn.close()
             except Exception as e:
@@ -500,7 +502,7 @@ def view_diagnosis(log_id):
         return redirect(url_for('login'))
 
     conn = database.get_db_connection()
-    cursor = conn.cursor(dictionary=True)
+    cursor = database.get_dict_cursor(conn)
     cursor.execute("SELECT * FROM symptoms_logs WHERE id=%s AND patient_id=%s", (log_id, session['user_id']))
     log = cursor.fetchone()
     cursor.close()
@@ -610,7 +612,7 @@ def download_report(log_id):
         return redirect(url_for('login'))
         
     conn = database.get_db_connection()
-    cursor = conn.cursor(dictionary=True)
+    cursor = database.get_dict_cursor(conn)
     cursor.execute("SELECT pdf_path FROM symptoms_logs WHERE id=%s AND patient_id=%s", (log_id, session['user_id']))
     log = cursor.fetchone()
     cursor.close()
@@ -668,13 +670,13 @@ def signup():
 
         try:
             cursor.execute(
-                "INSERT INTO users (name, email, password, city, address, pincode, medical_history, lat, lng) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)",
+                "INSERT INTO users (name, email, password, city, address, pincode, medical_history, lat, lng) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s) RETURNING id",
                 (name, email, hashed_password, city, address, pincode, history, lat, lng)
             )
+            user_id = cursor.fetchone()[0]
             conn.commit()
             
             # Log Activity
-            user_id = cursor.lastrowid
             utils.log_activity(user_id, 'patient', 'signup', f"New patient registered: {email}")
             
             flash("Registration Successful! Please Login.", "success")
@@ -697,7 +699,7 @@ def login():
         role = request.form['role']  # 'patient', 'doctor', 'admin'
 
         conn = database.get_db_connection()
-        cursor = conn.cursor(dictionary=True)
+        cursor = database.get_dict_cursor(conn)
 
         user = None
         if role == 'patient':
@@ -776,7 +778,7 @@ def google_callback():
             return redirect(url_for('login'))
         
         conn = database.get_db_connection()
-        cursor = conn.cursor(dictionary=True)
+        cursor = database.get_dict_cursor(conn)
         
         # Check if user exists in users table (patients)
         cursor.execute("SELECT * FROM users WHERE email = %s", (email,))
@@ -804,11 +806,11 @@ def google_callback():
                 hashed_password = generate_password_hash(random_password)
                 
                 cursor.execute(
-                    "INSERT INTO users (name, email, password, city, address, pincode) VALUES (%s, %s, %s, %s, %s, %s)",
+                    "INSERT INTO users (name, email, password, city, address, pincode) VALUES (%s, %s, %s, %s, %s, %s) RETURNING id",
                     (name, email, hashed_password, '', '', '')
                 )
+                user_id = cursor.fetchone()[0]
                 conn.commit()
-                user_id = cursor.lastrowid
                 
                 session['user_id'] = user_id
                 session['role'] = 'patient'
@@ -843,7 +845,7 @@ def patient_dashboard():
         return redirect(url_for('login'))
         
     conn = database.get_db_connection()
-    cursor = conn.cursor(dictionary=True)
+    cursor = database.get_dict_cursor(conn)
     cursor.execute("SELECT * FROM users WHERE id = %s", (session['user_id'],))
     user = cursor.fetchone()
     
@@ -940,7 +942,7 @@ def view_doctors():
     specialization = request.args.get('specialization')
     log_id = request.args.get('log_id')
     conn = database.get_db_connection()
-    cursor = conn.cursor(dictionary=True)
+    cursor = database.get_dict_cursor(conn)
 
     if specialization:
         cursor.execute("SELECT * FROM doctors WHERE specialization = %s", (specialization,))
@@ -996,7 +998,7 @@ def book_appointment(doctor_id):
         return redirect(url_for('login'))
 
     conn = database.get_db_connection()
-    cursor = conn.cursor(dictionary=True)
+    cursor = database.get_dict_cursor(conn)
     cursor.execute("SELECT * FROM doctors WHERE id = %s", (doctor_id,))
     doctor = cursor.fetchone()
     cursor.close()
@@ -1029,7 +1031,7 @@ def confirm_booking():
     disease = session.get('last_predicted_disease', 'General Checkup')
 
     conn = database.get_db_connection()
-    cursor = conn.cursor(dictionary=True)
+    cursor = database.get_dict_cursor(conn)
 
     # 1. Double Booking Check
     cursor.execute(
@@ -1076,7 +1078,7 @@ def my_appointments():
 
     patient_id = session['user_id']
     conn = database.get_db_connection()
-    cursor = conn.cursor(dictionary=True)
+    cursor = database.get_dict_cursor(conn)
 
     query = """
         SELECT a.*, d.name AS doctor_name, d.address AS doctor_address, 
@@ -1106,7 +1108,7 @@ def doctor_dashboard():
 
     doctor_id = session['user_id']
     conn = database.get_db_connection()
-    cursor = conn.cursor(dictionary=True)
+    cursor = database.get_dict_cursor(conn)
 
     cursor.execute("SELECT * FROM doctors WHERE id = %s", (doctor_id,))
     doctor = cursor.fetchone()
@@ -1160,7 +1162,7 @@ def get_patient_history(patient_id):
         return jsonify({'error': 'Unauthorized'}), 401
     
     conn = database.get_db_connection()
-    cursor = conn.cursor(dictionary=True)
+    cursor = database.get_dict_cursor(conn)
     cursor.execute("""
         SELECT sl.id, sl.symptoms_text, sl.disease_predicted, sl.created_at,
                COALESCE(sl.confidence_level, 'N/A') as confidence_level,
@@ -1323,7 +1325,7 @@ def admin_dashboard():
         return redirect(url_for('login'))
 
     conn = database.get_db_connection()
-    cursor = conn.cursor(dictionary=True)
+    cursor = database.get_dict_cursor(conn)
 
     # Stats
     cursor.execute("SELECT COUNT(*) AS c FROM users")
@@ -1510,7 +1512,7 @@ def manage_doctors():
         return redirect(url_for('login'))
 
     conn = database.get_db_connection()
-    cursor = conn.cursor(dictionary=True)
+    cursor = database.get_dict_cursor(conn)
     cursor.execute("SELECT * FROM doctors")
     docs = cursor.fetchall()
     
@@ -1571,7 +1573,7 @@ def download_prescription(appt_id):
         return redirect(url_for('login'))
         
     conn = database.get_db_connection()
-    cursor = conn.cursor(dictionary=True)
+    cursor = database.get_dict_cursor(conn)
     cursor.execute("SELECT prescription_path FROM appointments WHERE id=%s", (appt_id,))
     appt = cursor.fetchone()
     cursor.close()

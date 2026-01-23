@@ -1,16 +1,27 @@
-import mysql.connector
+import psycopg2
+import psycopg2.extras
 import os
 
 def get_db_connection():
     """
-    Returns a new MySQL connection to the MediMind database.
-    Uses environment variables for production (Railway), falls back to local defaults.
+    Returns a new PostgreSQL connection to the Supabase database.
+    Uses DATABASE_URL (standard for Render/Supabase) or individual env vars.
     """
-    return mysql.connector.connect(
-        host=os.environ.get('MYSQLHOST', os.environ.get('DB_HOST', 'localhost')),
-        user=os.environ.get('MYSQLUSER', os.environ.get('DB_USER', 'root')),
-        password=os.environ.get('MYSQLPASSWORD', os.environ.get('DB_PASSWORD', 'root')),
-        database=os.environ.get('MYSQLDATABASE', os.environ.get('DB_NAME', 'medimind')),
-        port=int(os.environ.get('MYSQLPORT', os.environ.get('DB_PORT', 3306)))
-    )
+    database_url = os.environ.get('DATABASE_URL')
+    
+    if database_url:
+        # Supabase/Render provides a full connection URL
+        return psycopg2.connect(database_url)
+    else:
+        # Fallback to individual environment variables
+        return psycopg2.connect(
+            host=os.environ.get('DB_HOST', 'localhost'),
+            user=os.environ.get('DB_USER', 'postgres'),
+            password=os.environ.get('DB_PASSWORD', 'postgres'),
+            database=os.environ.get('DB_NAME', 'wellsure'),
+            port=int(os.environ.get('DB_PORT', 5432))
+        )
 
+def get_dict_cursor(conn):
+    """Returns a cursor that returns rows as dictionaries."""
+    return conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
