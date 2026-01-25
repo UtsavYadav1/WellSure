@@ -972,15 +972,27 @@ def view_doctors():
                 utils.process_doctors_data(doctors_list, patient['lat'], patient['lng'])
 
     # Normalize time fields for JSON serialization compatibility
+    # Normalize fields for JSON serialization compatibility (Decimal, Time, Date)
+    from decimal import Decimal
+    from datetime import date, datetime, timedelta
+
     for doc in doctors_list:
-        for field in ['available_start_time', 'available_end_time']:
-            val = doc.get(field)
-            if val and hasattr(val, 'total_seconds'):
-                seconds = int(val.total_seconds())
+        for k, v in doc.items():
+            if isinstance(v, Decimal):
+                doc[k] = float(v)
+            elif isinstance(v, (date, datetime)):
+                doc[k] = str(v)
+            elif isinstance(v, timedelta):
+                # Handle timedelta (already partly handled but ensuring safety)
+                seconds = int(v.total_seconds())
                 hours = seconds // 3600
                 minutes = (seconds % 3600) // 60
-                doc[field] = f"{hours:02}:{minutes:02}"
-            elif isinstance(val, str) and len(val.split(':')) == 3:
+                doc[k] = f"{hours:02}:{minutes:02}"
+                
+        # Existing logic for string time format fallback
+        for field in ['available_start_time', 'available_end_time']:
+             val = doc.get(field)
+             if isinstance(val, str) and len(val.split(':')) == 3:
                 doc[field] = val[:5]
 
     cursor.close()
