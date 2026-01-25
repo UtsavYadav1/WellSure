@@ -38,6 +38,23 @@ app.config['UPLOAD_FOLDER'] = os.path.join(basedir, 'static', 'uploads')
 from werkzeug.middleware.proxy_fix import ProxyFix
 app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1)
 
+# Custom JSON Encoder for PostgreSQL types
+from flask.json.provider import DefaultJSONProvider
+from decimal import Decimal
+from datetime import date, datetime, time, timedelta
+
+class CustomJSONProvider(DefaultJSONProvider):
+    def default(self, obj):
+        if isinstance(obj, Decimal):
+            return float(obj)
+        if isinstance(obj, (date, datetime, time)):
+            return str(obj)
+        if isinstance(obj, timedelta):
+            return str(obj)
+        return super().default(obj)
+
+app.json = CustomJSONProvider(app)
+
 # Ensure Flask treats everything as HTTPS on Render
 app.config['PREFERRED_URL_SCHEME'] = 'https'
 app.config['SESSION_COOKIE_SECURE'] = True  # Cookies only sent over HTTPS
