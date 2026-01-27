@@ -358,22 +358,26 @@ def predict():
                 my_diet = []
                 workout = []
                 
-                # 2. Generate PDF
-                # 2. Generate PDF
-                timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
-                pdf_filename = f"report_{session.get('user_id', 'guest')}_{timestamp}.pdf"
-                # Store relative in DB for portability
-                pdf_path = os.path.join("static", "reports", pdf_filename)
-                
-                # Use absolute for generation
-                abs_pdf_path = os.path.join(basedir, pdf_path)
-                os.makedirs(os.path.dirname(abs_pdf_path), exist_ok=True)
-                
-                patient_name = session.get('name', 'Guest')
-                utils.generate_pdf_report(
-                    abs_pdf_path, patient_name, predicted_disease, symptoms, 
-                    dis_des, meds, my_precautions, my_diet, workout, age=age, gender=gender
-                )
+                # 2. Generate PDF (Guarded)
+                pdf_path = None
+                try:
+                    timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+                    pdf_filename = f"report_{session.get('user_id', 'guest')}_{timestamp}.pdf"
+                    # Store relative in DB for portability
+                    pdf_path = os.path.join("static", "reports", pdf_filename)
+                    
+                    # Use absolute for generation
+                    abs_pdf_path = os.path.join(basedir, pdf_path)
+                    os.makedirs(os.path.dirname(abs_pdf_path), exist_ok=True)
+                    
+                    patient_name = session.get('name', 'Guest')
+                    utils.generate_pdf_report(
+                        abs_pdf_path, patient_name, predicted_disease, symptoms, 
+                        dis_des, meds, my_precautions, my_diet, workout, age=age, gender=gender
+                    )
+                except Exception as pdf_e:
+                    print(f"Emergency PDF Generation Failed (Skipping): {pdf_e}")
+                    pdf_path = None
 
                 # 3. Log to DB
                 log_id = None
@@ -436,23 +440,26 @@ def predict():
             session['last_symptoms_text'] = symptoms
 
             import os
-            # 1. Generate PDF
-            # 1. Generate PDF
-            timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
-            pdf_filename = f"report_{session.get('user_id', 'guest')}_{timestamp}.pdf"
-            # Store relative in DB
-            pdf_path = os.path.join("static", "reports", pdf_filename)
-            pdf_url = url_for('static', filename=f'reports/{pdf_filename}')
-            
-            # Use absolute for generation
-            abs_pdf_path = os.path.join(basedir, pdf_path)
-            os.makedirs(os.path.dirname(abs_pdf_path), exist_ok=True)
-            
-            patient_name = session.get('name', 'Guest')
-            utils.generate_pdf_report(
-                abs_pdf_path, patient_name, predicted_disease, symptoms, 
-                dis_des, meds, my_precautions, rec_diet, wrk, age=age, gender=gender
-            )
+            # 1. Generate PDF (Guarded)
+            pdf_path = None
+            try:
+                timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+                pdf_filename = f"report_{session.get('user_id', 'guest')}_{timestamp}.pdf"
+                # Store relative in DB
+                pdf_path = os.path.join("static", "reports", pdf_filename)
+                
+                # Use absolute for generation
+                abs_pdf_path = os.path.join(basedir, pdf_path)
+                os.makedirs(os.path.dirname(abs_pdf_path), exist_ok=True)
+                
+                patient_name = session.get('name', 'Guest')
+                utils.generate_pdf_report(
+                    abs_pdf_path, patient_name, predicted_disease, symptoms, 
+                    dis_des, meds, my_precautions, rec_diet, wrk, age=age, gender=gender
+                )
+            except Exception as pdf_e:
+                print(f"PDF Generation Failed (Skipping to prevent crash): {pdf_e}")
+                pdf_path = None # Ensure logic proceeds without PDF
 
             # 2. Log to DB
             log_id = None
