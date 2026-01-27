@@ -23,7 +23,7 @@ def geocode_address(address, city, pincode):
     
     url = "https://nominatim.openstreetmap.org/search"
     headers = {
-        'User-Agent': 'MediMindAI/1.0 (educational_project)',
+        'User-Agent': 'MediMindAI/1.0 (educational_project; contact_admin@wellsure.app)',
         'Accept-Language': 'en'
     }
 
@@ -34,7 +34,8 @@ def geocode_address(address, city, pincode):
                 'format': 'json',
                 'limit': 1
             }
-            response = requests.get(url, params=params, headers=headers)
+            # Add timeout to prevent hanging
+            response = requests.get(url, params=params, headers=headers, timeout=5)
             if response.status_code == 200:
                 data = response.json()
                 if data:
@@ -42,7 +43,8 @@ def geocode_address(address, city, pincode):
                     lon = float(data[0]['lon'])
                     return lat, lon
         except Exception as e:
-            print(f"Geocoding Error ({q}): {e}")
+            # Log as warning but don't crash. Network unreachable is common in free tiers.
+            print(f"Geocoding Warning: Could not fetch coordinates for '{q}' ({e})")
             
     return None, None
 
