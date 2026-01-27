@@ -1274,6 +1274,63 @@ def upload_prescription(appt_id):
     return redirect(url_for('doctor_dashboard'))
 
 
+@app.route('/approve_appointment', methods=['POST'])
+def approve_appointment():
+    if 'user_id' not in session or session.get('role') != 'doctor':
+        return redirect(url_for('login'))
+
+    appt_id = request.form['appointment_id']
+    meeting_link = request.form.get('meeting_link', '').strip()
+
+    conn = database.get_db_connection()
+    cursor = conn.cursor()
+    try:
+        # Update with link if provided
+        cursor.execute(
+            "UPDATE appointments SET status='Confirmed', meeting_link=%s WHERE id=%s",
+            (meeting_link, appt_id)
+        )
+        conn.commit()
+        utils.log_activity(session['user_id'], 'doctor', 'approve_appointment', f"Approved Appt ID {appt_id}")
+        flash("Appointment Confirmed!", "success")
+    except Exception as e:
+        conn.rollback()
+        flash(f"Error: {e}", "danger")
+    finally:
+        cursor.close()
+        conn.close()
+
+    return redirect(url_for('doctor_dashboard'))
+
+
+@app.route('/update_appointment_status/<int:appt_id>/<status>')
+def update_appointment_status(appt_id, status):
+    if 'user_id' not in session or session.get('role') != 'doctor':
+        return redirect(url_for('login'))
+        
+    # Validate status to prevent abuse
+    valid_statuses = ['Cancelled', 'In Consultation', 'Completed', 'Pending']
+    if status not in valid_statuses:
+         flash("Invalid Status", "danger")
+         return redirect(url_for('doctor_dashboard'))
+
+    conn = database.get_db_connection()
+    cursor = conn.cursor()
+    try:
+        cursor.execute("UPDATE appointments SET status=%s WHERE id=%s", (status, appt_id))
+        conn.commit()
+        utils.log_activity(session['user_id'], 'doctor', 'update_status', f"Changed Appt ID {appt_id} to {status}")
+        flash(f"Appointment marked as {status}.", "success")
+    except Exception as e:
+        conn.rollback()
+        flash(f"Error: {e}", "danger")
+    finally:
+        cursor.close()
+        conn.close()
+        
+    return redirect(url_for('doctor_dashboard'))
+
+
 @app.route('/complete_appointment/<int:appt_id>')
 def complete_appointment(appt_id):
     if 'user_id' not in session or session.get('role') != 'doctor':
