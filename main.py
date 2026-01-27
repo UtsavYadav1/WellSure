@@ -1095,8 +1095,15 @@ def confirm_booking():
         )
         conn.commit()
         
-        # Log Activity
-        utils.log_activity(patient_id, 'patient', 'book_appointment', f"Booked Dr. ID {doctor_id} on {appt_date} at {appt_time}")
+        # Log Activity (Inlined to reuse connection)
+        try:
+            cursor.execute(
+                "INSERT INTO activity_logs (user_id, role, action, details) VALUES (%s, %s, %s, %s)",
+                (patient_id, 'patient', 'book_appointment', f"Booked Dr. ID {doctor_id} on {appt_date} at {appt_time}")
+            )
+            conn.commit()
+        except Exception as log_e:
+            print(f"Logging Error: {log_e}") # Non-blocking
 
         return render_template('appointment_confirmed.html')
     except Exception as e:
